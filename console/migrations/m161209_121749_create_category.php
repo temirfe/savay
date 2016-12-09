@@ -2,27 +2,24 @@
 
 use yii\db\Migration;
 
-class m161120_065441_create_page extends Migration
+class m161209_121749_create_category extends Migration
 {
     public function up()
     {
         $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
-        $this->createTable('page', [
+        $this->createTable('category', [
             'id' => $this->primaryKey(),
             'url' => $this->string('20')->notNull(),
             'title' => $this->string('250')->notNull(),
-            'text' => $this->text(),
-            'image' =>$this->string('200')->notNull(),
-            'category' => $this->integer('6')->notNull()->defaultValue(0),
+            'description' => $this->string('500')->notNull(),
         ],$tableOptions);
-
-        $this->createIndex('idx_page_url', 'page', 'url');
-        $this->createIndex('idx_page_category', 'page', 'category');
     }
 
     public function down()
     {
-        $this->dropTable('page');
+        echo "m161209_121749_create_category cannot be reverted.\n";
+
+        return false;
     }
 
     /*
