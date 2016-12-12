@@ -14,8 +14,11 @@ class m161209_121738_create_article extends Migration
             'image' =>$this->string('200')->notNull(),
             'category_id' => $this->smallInteger('6')->notNull()->defaultValue(0),
             'expert_id' => $this->smallInteger('6')->notNull()->defaultValue(0),
+            'expert2_id' => $this->smallInteger('6')->notNull()->defaultValue(0),
+            'expert3_id' => $this->smallInteger('6')->notNull()->defaultValue(0),
             'date_create'=>$this->timestamp(),
             'footnotes' =>$this->string('1000')->notNull(),
+            'archive' => $this->boolean(),
         ],$tableOptions);
 
         $this->createIndex('idx_page_expert', 'article', 'expert_id');

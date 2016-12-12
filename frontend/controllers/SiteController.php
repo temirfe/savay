@@ -83,9 +83,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $dao=Yii::$app->db;
-        $cities=$dao->createCommand("SELECT id,title, image FROM city")->queryAll();
-        $packages=$dao->createCommand("SELECT * FROM package ORDER BY id DESC")->queryAll();
-        return $this->render('index',['cities'=>$cities,'packages'=>$packages]);
+        return $this->render('index',['cities'=>'','packages'=>'']);
     }
 
     /**
@@ -250,6 +248,20 @@ class SiteController extends Controller
                 @unlink($dir.'/'.$key);
                 @unlink($dir.'/'.$full);
                 Yii::$app->db->createCommand("UPDATE {$model_name} SET image='' WHERE id='{$id}'")->execute();
+            }
+        }
+        Yii::$app->response->format=\yii\web\Response::FORMAT_JSON;
+        return true;
+    }
+
+    public function actionFileDelete($id,$model_name)
+    {
+        $key=Yii::$app->request->post('key');
+        $webroot=Yii::getAlias('@webroot');
+        if(is_dir($dir=$webroot."/files/{$model_name}/".$id))
+        {
+            if(is_file($dir.'/'.$key)){
+                @unlink($dir.'/'.$key);
             }
         }
         Yii::$app->response->format=\yii\web\Response::FORMAT_JSON;

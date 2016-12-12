@@ -34,8 +34,8 @@ if($controller=='page' && $action=="view" && Yii::$app->request->get('id')==1) $
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <link rel="shortcut icon" href="/images/favicon2.ico" type="image/x-icon">
-    <link rel="icon" href="/images/favicon2.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
 </head>
 <body data-spy="scroll" data-target="#myScrollspy" data-offset="140" id="top">
 <?php $this->beginBody() ?>
@@ -52,14 +52,14 @@ if($controller=='page' && $action=="view" && Yii::$app->request->get('id')==1) $
         'brandLabel' => "<div class='logo_wrap  logo_wrap_index js_logo_wrap'></div>",
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'mynavbar navbar-fixed-top',
+            'class' => 'mynavbar navbar',
         ],
     ]);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
         ['label' => 'About us', 'url' => ['/page/1'], 'active'=>$about_active],
-        ['label' => 'Explore UAE', 'url' => ['/site/explore']],
-        ['label' => 'Destinations', 'url' => ['/destination/show']],
+        ['label' => 'Experts', 'url' => ['/site/explore']],
+        ['label' => 'Events', 'url' => ['/destination/show']],
         ['label' => 'Contact', 'url' => ['/site/contact']],
     ];
     if (Yii::$app->user->isGuest) {
@@ -80,24 +80,17 @@ if($controller=='page' && $action=="view" && Yii::$app->request->get('id')==1) $
     ]);
     NavBar::end();
     ?>
-    <?php
-        if($controller=="site" && $action=="index"){
-            echo "<div class='slider'>".Html::img("images/bg_sunset.jpg")."</div>";
-        }
-    ?>
 
-    <div class="container">
-        <?php /*= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ])  */?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
-    </div>
+    <?php /*echo Breadcrumbs::widget([
+        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+    ])*/ ?>
+    <?= Alert::widget() ?>
+    <?= $content ?>
 </div>
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; Tohama Travel & Tourism LLC <?= date('Y') ?></p>
+        <p class="pull-left">&copy; cppi <?= date('Y') ?></p>
     </div>
 </footer>
 <a href="#" class="scrollToTop"><span class="glyphicon glyphicon-arrow-up"></span></a>

@@ -20,11 +20,16 @@ class MyModel extends \yii\db\ActiveRecord
     public $imageFile;
     public $imageFiles=array();
 
+    public $docFile;
+    public $docFiles=array();
+
     public function afterSave($insert, $changedAttributes){
         parent::afterSave($insert, $changedAttributes);
 
         $this->saveImage();
         $this->optimizeImage();
+
+        $this->saveDoc();
     }
 
     /*public function afterFind()
@@ -39,7 +44,9 @@ class MyModel extends \yii\db\ActiveRecord
     {
         return [
             [['imageFile'], 'file', 'extensions' => 'jpg,jpeg,gif,png'],
-            [['imageFiles'], 'file', 'extensions' => 'jpg,jpeg,gif,png', 'maxSize'=>20*1024*1024, 'maxFiles'=>10]
+            [['imageFiles'], 'file', 'extensions' => 'jpg,jpeg,gif,png', 'maxSize'=>20*1024*1024, 'maxFiles'=>10],
+            [['docFile'], 'file', 'extensions' => 'doc,docx,rtf,pdf,xls,xlsx'],
+            [['docFiles'], 'file', 'extensions' => 'doc,docx,rtf,pdf,xls,xlsx', 'maxSize'=>20*1024*1024, 'maxFiles'=>10]
         ];
     }
 
@@ -52,39 +59,70 @@ class MyModel extends \yii\db\ActiveRecord
         }
 
         $model_name=Yii::$app->controller->id;
-        $dir=Yii::getAlias('@webroot')."/images/{$model_name}/";
-        if (!file_exists($dir)) {mkdir($dir);}
+        if($this->imageFile || $this->imageFiles){
+            $dir=Yii::getAlias('@webroot')."/images/{$model_name}/";
+            if (!file_exists($dir)) {mkdir($dir);}
 
-        $tosave=$dir.$this->id;
-        if (!file_exists($tosave)) {
-            mkdir($tosave);
-        }
+            $tosave=$dir.$this->id;
+            if (!file_exists($tosave)) {
+                mkdir($tosave);
+            }
 
-        if($this->imageFile){
-            $time=time();
-            $extension=$this->imageFile->extension;
-            $imageName=$time.'.'.$extension;
-            $this->imageFile->saveAs($tosave.'/' . $imageName);
-
-            $imagine=Image::getImagine()->open($tosave.'/'.$imageName);
-            $imagine->thumbnail(new Box(1500, 1000))->save($tosave.'/'.$imageName);
-            //$imagine->thumbnail(new Box(400, 250))->save($tosave.'/s_'.$imageName);
-            Image::thumbnail($tosave.'/'.$imageName,375, 200)->save($tosave.'/s_'.$imageName);
-
-            Yii::$app->db->createCommand("UPDATE {$model_name} SET image='{$imageName}' WHERE id='{$this->id}'")->execute();
-        }
-        if($this->imageFiles){
-            foreach($this->imageFiles as $image)
-            {
-                $time=time().rand(1000, 100000);
-                $extension=$image->extension;
+            if($this->imageFile){
+                $time=time();
+                $extension=$this->imageFile->extension;
                 $imageName=$time.'.'.$extension;
+                $this->imageFile->saveAs($tosave.'/' . $imageName);
 
-                $image->saveAs($tosave.'/' . $imageName);
                 $imagine=Image::getImagine()->open($tosave.'/'.$imageName);
-                $imagine->thumbnail(new Box(1500, 1000))->save($tosave.'/' .$imageName);
-                $imagine->thumbnail(new Box(400, 250))->save($tosave.'/s_'.$imageName);
-                //Image::thumbnail($tosave.'/'.$imageName,250, 250)->save($tosave.'/s_'.$imageName);
+                $imagine->thumbnail(new Box(1500, 1000))->save($tosave.'/'.$imageName);
+                //$imagine->thumbnail(new Box(400, 250))->save($tosave.'/s_'.$imageName);
+                $width=375;
+                if($model_name=='expert') $width=200;
+                Image::thumbnail($tosave.'/'.$imageName,$width, 200)->save($tosave.'/s_'.$imageName);
+
+                Yii::$app->db->createCommand("UPDATE {$model_name} SET image='{$imageName}' WHERE id='{$this->id}'")->execute();
+            }
+            if($this->imageFiles){
+                foreach($this->imageFiles as $image)
+                {
+                    $time=time().rand(1000, 100000);
+                    $extension=$image->extension;
+                    $imageName=$time.'.'.$extension;
+
+                    $image->saveAs($tosave.'/' . $imageName);
+                    $imagine=Image::getImagine()->open($tosave.'/'.$imageName);
+                    $imagine->thumbnail(new Box(1500, 1000))->save($tosave.'/' .$imageName);
+                    $imagine->thumbnail(new Box(400, 250))->save($tosave.'/s_'.$imageName);
+                    //Image::thumbnail($tosave.'/'.$imageName,250, 250)->save($tosave.'/s_'.$imageName);
+                }
+            }
+        }
+    }
+
+    protected function saveDoc(){
+        $this->docFile = UploadedFile::getInstance($this, 'docFile');
+        $this->docFiles = UploadedFile::getInstances($this, 'docFiles');
+
+        if($this->docFile || $this->docFiles){
+            $model_name=Yii::$app->controller->id;
+            $dir=Yii::getAlias('@webroot')."/files/{$model_name}/";
+            if (!file_exists($dir)) {mkdir($dir);}
+
+            $tosave=$dir.$this->id;
+            if (!file_exists($tosave)) {
+                mkdir($tosave);
+            }
+
+            if($this->docFile){
+                $this->docFile->saveAs($tosave.'/'.$this->docFile->name);
+                //$this->word_size=round($this->docFile->size/1024,1); //kb
+            }
+            if($this->docFiles){
+                foreach($this->docFiles as $file){
+                    $fileName=str_replace(" ","",$file->name);
+                    $file->saveAs($tosave.'/' . $fileName);
+                }
             }
         }
     }
