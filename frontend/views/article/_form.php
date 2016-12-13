@@ -89,12 +89,13 @@ $experts=ArrayHelper::map($experts,'id','title');
     $url = Url::to(['site/file-delete', 'id' => $model->id, 'model_name'=>$model_name]);
     $iniCv=false;
     if(!$model->isNewRecord) {
-        if(is_dir("files/".$model_name."/".$model->id)){
-            $imgs=scandir("files/".$model_name."/".$model->id);
+        $dir="files/".$model_name."/".$model->id;
+        if(is_dir($dir)){
+            $imgs=scandir($dir);
             foreach($imgs as $img){
                 if($img!='.' && $img!='..'){
                     $iniCv[]=[
-                        "<div class='file-preview-text'><h2><i class='glyphicon glyphicon-file'></i></h2>".Html::a($img,"@web/files/".$model_name."/".$img, ['class'=>'file-preview-text'])."</div>"
+                        "<div class='file-preview-text'><h2><i class='glyphicon glyphicon-file'></i></h2>".Html::a($img,'/'.$dir."/".$img, ['class'=>'file-preview-text'])."</div>"
                     ];
                     $initialPreviewConfig[] = ['width' => '80px', 'url' => $url, 'key' => $img];
                 }

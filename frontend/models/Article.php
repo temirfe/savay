@@ -4,6 +4,7 @@ namespace frontend\models;
 
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 /**
  * This is the model class for table "article".
  *
@@ -79,5 +80,45 @@ class Article extends MyModel
     public function getExpert3()
     {
         return $this->hasOne(Expert::className(), ['id' => 'expert3_id']);
+    }
+    public function showExpert($int,$author){
+        if(!$author) return '';
+        if($int==2){
+            $expert_img=$this->expert2->image;
+            $expert_id=$this->expert2_id;
+            $expert_desc=$this->expert2->description;
+            $expert_name=$this->expert2->title;
+        }
+        else if($int==3){
+            $expert_img=$this->expert3->image;
+            $expert_id=$this->expert3_id;
+            $expert_desc=$this->expert3->description;
+            $expert_name=$this->expert3->title;
+        }
+        else{
+            $expert_img=$this->expert->image;
+            $expert_id=$this->expert_id;
+            $expert_desc=$this->expert->description;
+            $expert_name=$this->expert->title;
+        }
+        $html="<div class='mb20 oh'>";
+        if($expert_img)
+            $img=Html::img("/images/expert/".$expert_id."/s_".$expert_img,['class'=>'round author_image_small']);
+        else {
+            $words = explode(" ", $expert_name);
+            $acronym = "";
+
+            foreach ($words as $w) {
+                $acronym .= mb_substr($w, 0, 1);
+            }
+            $img="<div class='round initials_thumb'>".$acronym."</div>";
+        }
+        $url=Html::a($img,['/expert/view','id'=>$expert_id]);
+        $html.="<div class='pull-left mr15'>".$url."</div>";
+        $html.="<h2 class='name'>".$author.'</h2>';
+        $html.="<span class='font12 color69'>".$expert_desc."</span>";
+        $html.="</div>";
+        
+        return $html;
     }
 }

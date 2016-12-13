@@ -56,19 +56,19 @@ if($controller=='page' && $action=="view" && Yii::$app->request->get('id')==1) $
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About us', 'url' => ['/page/1'], 'active'=>$about_active],
-        ['label' => 'Experts', 'url' => ['/site/explore']],
-        ['label' => 'Events', 'url' => ['/destination/show']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
+        ['label' => Yii::t('app','Home'), 'url' => ['/site/index']],
+        ['label' => Yii::t('app','About us'), 'url' => ['/page/1'], 'active'=>$about_active],
+        ['label' => Yii::t('app','Experts'), 'url' => ['/site/explore']],
+        ['label' => Yii::t('app','Events'), 'url' => ['/destination/show']],
+        ['label' => Yii::t('app','Contact'), 'url' => ['/site/contact']],
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        $menuItems[] = ['label' => Yii::t('app','Login'), 'url' => ['/site/login']];
     } else {
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
+                Yii::t('app','Logout').' (' . Yii::$app->user->identity->username . ')',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()
