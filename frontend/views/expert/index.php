@@ -10,7 +10,7 @@ use yii\grid\GridView;
 $this->title = Yii::t('app', 'Experts');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="expert-index">
+<div class="expert-index container">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -22,9 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
+            ['attribute' => 'id', 'contentOptions'=>['width'=>80]],
             'title',
             'description',
             'email:email',
@@ -37,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'education',
             // 'cv',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn', 'contentOptions'=>['width'=>80]],
         ],
     ]); ?>
 </div>

@@ -21,7 +21,7 @@ $authors=$author.$and1.$author2.$and2.$author3;
 ?>
 <div class="article-view">
 
-    <div class="slider_wrap">
+    <div class="slider_wrap mt-20">
         <div class="slider"><?=Html::img('/images/article/'.$model->id.'/'.$model->image)?></div>
         <div class="slider_title">
             <h1><?= Html::encode($this->title) ?></h1>

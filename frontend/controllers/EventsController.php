@@ -3,17 +3,17 @@
 namespace frontend\controllers;
 
 use Yii;
-use frontend\models\Expert;
-use frontend\models\ExpertSearch;
-use yii\data\ActiveDataProvider;
+use frontend\models\Event;
+use frontend\models\EventSearch;
+use frontend\models\ArticleSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ExpertController implements the CRUD actions for Expert model.
+ * EventsController implements the CRUD actions for Event model.
  */
-class ExpertController extends Controller
+class EventsController extends Controller
 {
     /**
      * @inheritdoc
@@ -31,12 +31,12 @@ class ExpertController extends Controller
     }
 
     /**
-     * Lists all Expert models.
+     * Lists all Event models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ExpertSearch();
+        $searchModel = new ArticleSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,30 +45,8 @@ class ExpertController extends Controller
         ]);
     }
 
-    public function actionList()
-    {
-        /*if(Yii::$app->language=='ru')
-        {
-            $content_lang='1';
-        }
-        else{
-            $content_lang='0';
-        }*/
-        $dataProvider = new ActiveDataProvider([
-            'query' => Expert::find(),
-            'pagination' => [
-                'pageSize' => 100,
-            ],
-            'sort'=> ['defaultOrder' => ['title'=>SORT_ASC]]
-        ]);
-
-        return $this->render('list', [
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
     /**
-     * Displays a single Expert model.
+     * Displays a single Event model.
      * @param integer $id
      * @return mixed
      */
@@ -80,13 +58,13 @@ class ExpertController extends Controller
     }
 
     /**
-     * Creates a new Expert model.
+     * Creates a new Event model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Expert();
+        $model = new Event();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -98,7 +76,7 @@ class ExpertController extends Controller
     }
 
     /**
-     * Updates an existing Expert model.
+     * Updates an existing Event model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -117,7 +95,7 @@ class ExpertController extends Controller
     }
 
     /**
-     * Deletes an existing Expert model.
+     * Deletes an existing Event model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -130,15 +108,15 @@ class ExpertController extends Controller
     }
 
     /**
-     * Finds the Expert model based on its primary key value.
+     * Finds the Event model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Expert the loaded model
+     * @return Event the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Expert::findOne($id)) !== null) {
+        if (($model = Event::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

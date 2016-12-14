@@ -42,12 +42,11 @@ if($controller=='page' && $action=="view" && Yii::$app->request->get('id')==1) $
 
 <div class="wrap">
     <?php
-    if(!$isGuest && $user_role=='admin'){include_once('_adminpanel.php');}
+    //if(!$isGuest && $user_role=='admin'){include_once('_adminpanel.php');}
     //elseif(!$isGuest && $user_role=='Moderator'){include_once('_moderpanel.php');}
     //elseif(!$isGuest && $user_role=='ContentManager'){include_once('_cmanagerpanel.php');}
     ?>
     <?php
-
     NavBar::begin([
         'brandLabel' => "<div class='logo_wrap  logo_wrap_index js_logo_wrap'></div>",
         'brandUrl' => Yii::$app->homeUrl,
@@ -58,7 +57,7 @@ if($controller=='page' && $action=="view" && Yii::$app->request->get('id')==1) $
     $menuItems = [
         ['label' => Yii::t('app','Home'), 'url' => ['/site/index']],
         ['label' => Yii::t('app','About us'), 'url' => ['/page/1'], 'active'=>$about_active],
-        ['label' => Yii::t('app','Experts'), 'url' => ['/site/explore']],
+        ['label' => Yii::t('app','Experts'), 'url' => ['/expert/list']],
         ['label' => Yii::t('app','Events'), 'url' => ['/destination/show']],
         ['label' => Yii::t('app','Contact'), 'url' => ['/site/contact']],
     ];
@@ -80,7 +79,6 @@ if($controller=='page' && $action=="view" && Yii::$app->request->get('id')==1) $
     ]);
     NavBar::end();
     ?>
-
     <?php /*echo Breadcrumbs::widget([
         'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
     ])*/ ?>

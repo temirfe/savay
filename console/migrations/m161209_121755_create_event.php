@@ -16,7 +16,7 @@ class m161209_121755_create_event extends Migration
             'date_start'=>$this->dateTime(),
             'date_end'=>$this->dateTime(),
             'place' =>$this->string('500')->notNull(),
-            'latlong' =>$this->string('50')->notNull(),
+            'latlong' =>$this->string('250')->notNull(),
             'hosted_by' =>$this->string('255')->notNull(),
         ],$tableOptions);
     }

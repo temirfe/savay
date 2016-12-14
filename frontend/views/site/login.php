@@ -7,13 +7,11 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Login';
+$this->title = Yii::t('app','Login');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-login">
+<div class="site-login container">
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>Please fill out the following fields to login:</p>
 
     <div class="row">
         <div class="col-lg-5">
@@ -24,17 +22,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'password')->passwordInput() ?>
 
                 <?= $form->field($model, 'rememberMe')->checkbox() ?>
-
-                <div style="color:#999;margin:1em 0">
-                    If you forgot your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>.
-                </div>
-
                 <div class="form-group">
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                    <?= Html::submitButton(Yii::t('app','Login'), ['class' => 'btn btn-primary pl20 pr20', 'name' => 'login-button']) ?>
                 </div>
 
-            <div style="color:#999;margin:1em 0">
-                Don't have account? <?= Html::a('Register', ['site/signup']) ?>.
+
+            <div style="color:#999;margin:1em 0; font-size:12px;">
+                <?= Html::a(Yii::t('app','Forgot password?'), ['site/request-password-reset']) ?>
+                |
+                <?= Html::a(Yii::t('app','Create account'), ['site/signup']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>

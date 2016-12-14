@@ -5,7 +5,15 @@ use yii\helpers\Html;
 //$this->title = 'Центр политико-правовых исследований';
 $this->title = 'ЦППИ';
 ?>
-<div class='slider'><?=Html::img("images/bg_sunset.jpg")?></div>
+<div class="slider_wrap">
+    <div class="slider">
+        <?php // echo Html::img('/images/article/'.$model->id.'/'.$model->image);?>
+        <?=Html::img("images/bg_sunset.jpg")?>
+    </div>
+    <div class="slider_title">
+        <h1><?= Html::encode($this->title) ?></h1>
+    </div>
+</div>
 <div class="site-index container">
 
     <div class="body-content">

@@ -1,6 +1,7 @@
 <?php
 namespace frontend\models;
 
+use Yii;
 use yii\base\Model;
 use common\models\User;
 
@@ -35,6 +36,18 @@ class SignupForm extends Model
             ['password', 'string', 'min' => 5],
         ];
         
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'username' => Yii::t('app', 'Username'),
+            'email' => Yii::t('app', 'Email'),
+            'password' => Yii::t('app', 'Password'),
+        ];
     }
 
     /**
