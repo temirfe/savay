@@ -21,6 +21,7 @@ use yii\helpers\ArrayHelper;
  */
 class Event extends MyModel
 {
+    public $panelist=[];
     /**
      * @inheritdoc
      */
@@ -37,7 +38,7 @@ class Event extends MyModel
         $rules= [
             [['title'], 'required'],
             [['text'], 'string'],
-            [['date_start', 'date_end'], 'safe'],
+            [['date_start', 'date_end','panelist'], 'safe'],
             [['title', 'description', 'place'], 'string', 'max' => 500],
             [['image'], 'string', 'max' => 200],
             [['latlong'], 'string', 'max' => 250],
@@ -58,11 +59,31 @@ class Event extends MyModel
             'description' => Yii::t('app', 'Description'),
             'text' => Yii::t('app', 'Text'),
             'image' => Yii::t('app', 'Image'),
+            'imageFile' => Yii::t('app', 'Image File'),
             'date_start' => Yii::t('app', 'Date Start'),
             'date_end' => Yii::t('app', 'Date End'),
             'place' => Yii::t('app', 'Place'),
-            'latlong' => Yii::t('app', 'Latlong'),
+            'latlong' => Yii::t('app', 'Map link'),
             'hosted_by' => Yii::t('app', 'Hosted By'),
+            'panelist'=>Yii::t('app', 'Panelist'),
         ];
+    }
+
+    public function afterSave($insert, $changedAttributes){
+        parent::afterSave($insert, $changedAttributes);
+
+        if($this->panelist){
+            $dao=Yii::$app->db;
+            $dao->createCommand()->delete('participant', ['model_name'=>'event','model_id'=>$this->id])->execute();
+            foreach($this->panelist as $panelist){
+                if($panelist){
+                    $dao->createCommand()->insert('participant', [
+                        'expert_id' => $panelist,
+                        'model_name' => 'event',
+                        'model_id' => $this->id,
+                    ])->execute();
+                }
+            }
+        }
     }
 }

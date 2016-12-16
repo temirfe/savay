@@ -67,6 +67,8 @@ class Expert extends MyModel
             'past_positions' => Yii::t('app', 'Past Positions'),
             'education' => Yii::t('app', 'Education'),
             'cv' => Yii::t('app', 'Upload Resume'),
+            'imageFile'=>Yii::t('app', 'Image'),
+            'docFiles'=>Yii::t('app', 'Upload files'),
         ];
     }
 }

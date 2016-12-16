@@ -132,7 +132,9 @@ a.desc:after {
 .pr10{padding-right:10px;}
 .pl15{padding-left:15px;}
 .pl20{padding-left:20px;}
+.pl40{padding-left:40px;}
 .pr20{padding-right:20px;}
+.pr40{padding-right:40px;}
 .pb5{padding-bottom: 5px;}
 .pl0{padding-left:0;}
 .pr0{padding-right:0;}
@@ -214,10 +216,12 @@ a.red:hover{color:#e9465b;}
 .font19, i.font19{font-size: 19px;}
 .font20, i.font20{font-size: 20px;}
 .gray5{color:rgb(153, 153, 153);}
+.color3{color:#333;}
 .color5{color:#555;}
 .color69{color:#696969;}
 .color9{color:#999;}
 .bbpurple{border-bottom: 1px solid #6a67ce;}
+.bbblue{border-bottom: 5px solid #61a9f1;}
 .bbgray{border-bottom: 1px solid #e6e6e6;}
 .btgray{border-top: 1px solid #e6e6e6;}
 .bbnone{border-bottom: none;}
@@ -232,6 +236,8 @@ a.red:hover{color:#e9465b;}
 .w100{width:100%;}
 .hover_bg:hover{background-color: #f9f9f9;}
 .ellip{overflow: hidden;  text-overflow: ellipsis;}
+.bold{font-weight:bold;}
+.lh15{line-height:1.5;}
 
 .nav > li > form > button.logout:focus {
     outline: none;
@@ -462,7 +468,7 @@ a.no_underline, a.no_underline:hover{
     padding: 0 0.5em;
 }
 .round{border-radius:50%;}
-.article p, .article ul{
+.article p, .article ul, .paragraph{
     font-family: serif;
     font-size: 19px;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
@@ -494,6 +500,7 @@ body:not(.rtl) .article p:first-of-type::first-letter {
 .aside-module{margin-bottom:40px;}
 h2.name{font-size:18px;margin-bottom: 3px; margin-top: 5px;}
 .author_image_small{width:60px;}
+.author_image_medium{width:100px;}
 .initials_thumb{background-color: #2d86e0; color:#fff; width:60px; height:60px; line-height:60px; font-size:18px; text-align:center;}
 .container h1 {
     border-bottom: 1px solid #61a9f1;
@@ -506,3 +513,12 @@ h2.name{font-size:18px;margin-bottom: 3px; margin-top: 5px;}
     text-transform: uppercase;
     margin-bottom: 25px;
 }
+h1.h1_2{
+    border: medium none;
+    display: block;
+    font-size: 30px;
+    margin: 12px 0 5px;
+    text-transform: none;
+}
+.font13 br{ margin-bottom: 3px;}
+h3{color:#2d86e0;}

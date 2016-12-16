@@ -36,3 +36,17 @@ $('.scrollToTop').click(function(e){
     $('html, body').animate({scrollTop : 0},500);
     return false;
 });
+
+//add participant
+$('.js_add_panelist').click(function (e) {
+   e.preventDefault();
+   var inp=$('.js_panelist_form').find('div').clone();
+    $('.js_panelists').append(inp);
+});
+
+//show form
+$('.js_register_to_event').click(function (e) {
+    e.preventDefault();
+    $('.js_attendant_form').show();
+    $(this).hide();
+});

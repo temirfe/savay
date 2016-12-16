@@ -73,13 +73,13 @@ use dosamigos\ckeditor\CKEditor;
 
     ?>
 
-    <?= $form->field($model, 'expertise_areas')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'expertise_areas')->textarea(['maxlength' => true, 'row'=>3]) ?>
 
-    <?= $form->field($model, 'current_positions')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'current_positions')->textarea(['maxlength' => true, 'row'=>3]) ?>
 
-    <?= $form->field($model, 'past_positions')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'past_positions')->textarea(['maxlength' => true, 'row'=>3]) ?>
 
-    <?= $form->field($model, 'education')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'education')->textarea(['maxlength' => true, 'row'=>3]) ?>
 
     <?php
     $model_name="expert";

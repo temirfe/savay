@@ -11,6 +11,11 @@ use \yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Event */
 /* @var $form yii\widgets\ActiveForm */
+$experts=Yii::$app->db->createCommand("SELECT * FROM expert ORDER BY title")->queryAll();
+$experts=ArrayHelper::map($experts,'id','title');
+
+$participants=Yii::$app->db->createCommand("SELECT expert_id FROM participant WHERE model_id='{$model->id}' AND model_name='event'")->queryAll();
+
 ?>
 
 <div class="event-form">
@@ -107,6 +112,19 @@ use \yii\helpers\ArrayHelper;
 
     <?= $form->field($model, 'hosted_by')->textInput(['maxlength' => true]) ?>
 
+    <div class="js_panelists">
+        <?php
+        if($participants){
+            foreach($participants as $key=>$pa){
+                $model->panelist[$key]=$pa['expert_id'];
+                echo $form->field($model, "panelist[$key]")->dropDownList($experts,['prompt'=>Yii::t('app','Select').".."]);
+            }
+        }
+        ?>
+    </div>
+    <?=Html::a(Yii::t('app','Add panelist'),'#',['class'=>'js_add_panelist mb20 iblock']);?>
+
+
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
@@ -114,3 +132,4 @@ use \yii\helpers\ArrayHelper;
     <?php ActiveForm::end(); ?>
 
 </div>
+<div class="js_panelist_form hidden"><?=$form->field($model, 'panelist[]')->dropDownList($experts,['prompt'=>Yii::t('app','Select').".."])?></div>

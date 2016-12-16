@@ -23,6 +23,7 @@ if(!isset($user_role) && $identity) $user_role=$identity->role; else $user_role=
 if(!isset($dao)) $dao=Yii::$app->db;
 
 if($controller=='page' && $action=="view" && Yii::$app->request->get('id')==1) $about_active=true; else $about_active=false;
+if($controller=='expert') $expert_active=true; else $expert_active=false;
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -57,7 +58,7 @@ if($controller=='page' && $action=="view" && Yii::$app->request->get('id')==1) $
     $menuItems = [
         ['label' => Yii::t('app','Home'), 'url' => ['/site/index']],
         ['label' => Yii::t('app','About us'), 'url' => ['/page/1'], 'active'=>$about_active],
-        ['label' => Yii::t('app','Experts'), 'url' => ['/expert/list']],
+        ['label' => Yii::t('app','Experts'), 'url' => ['/expert/list'], 'active'=>$expert_active],
         ['label' => Yii::t('app','Events'), 'url' => ['/destination/show']],
         ['label' => Yii::t('app','Contact'), 'url' => ['/site/contact']],
     ];
