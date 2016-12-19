@@ -15,19 +15,12 @@ $this->params['breadcrumbs'][] = $this->title;
 $time=time();
 $start=strtotime($model->date_start);
 $end=strtotime($model->date_end);
-if($end<$time) {$msg='buttu';}
-else if($start<$time) {$msg='going';}
-else {$msg='emi bolot';}
-
-
-if(date('d-m', $start)==date('d-m', $end)){
-    $start_date= Yii::$app->formatter->asDatetime($model->date_start,'EEEE, d MMMM, y H:mm');
-    $end_date= Yii::$app->formatter->asTime($model->date_end,'H:mm');
-}
-else {
-    $start_date= Yii::$app->formatter->asDatetime($model->date_start,'d MMMM H:mm');
-    $end_date= Yii::$app->formatter->asDatetime($model->date_end,'H:mm d MMMM, y');
-}
+$status=$model->getStatus();
+$msg=$status['msg'];
+$register=$status['register'];
+$date=$model->getDates();
+$start_date=$date['start'];
+$end_date=$date['end'];
 
 if($model->latlong) $map=Html::a("<span class='glyphicon glyphicon-map-marker mr5'></span>".Yii::t('app','Map'),$model->latlong,['target'=>'_blank','class'=>'darklink']);
 else $map='';
@@ -48,6 +41,7 @@ if($participants){
         <div class="slider_wrap mt-20 mb40">
             <div class="slider"><?=Html::img('/images/event/'.$model->id.'/'.$model->image)?></div>
             <div class="slider_title">
+                <div class="text-uppercase bold white mb5 font12"><?=$msg?></div>
                 <h1><?= Html::encode($this->title) ?></h1>
             </div>
         </div>
@@ -55,7 +49,11 @@ if($participants){
     }
     else{
         ?>
-        <div class="container"><h1><?= Html::encode($this->title) ?></h1></div>
+
+        <div class="container">
+            <div class="text-uppercase bold blue font12"><?=$msg?></div>
+            <h1 class="event"><?= Html::encode($this->title) ?></h1>
+        </div>
         <?php
     }
 ?>
@@ -79,7 +77,7 @@ if($participants){
                     ]);
                 }
                 else{
-                    echo Html::a(Yii::t('app','Register to attend'),'#',['class'=>'btn btn-primary js_register_to_event']);
+                    if($register) echo Html::a(Yii::t('app','Register to attend'),'#',['class'=>'btn btn-primary js_register_to_event']);
                     ?>
 
                     <div class="attendant-form js_attendant_form hiddeniraak">

@@ -49,6 +49,18 @@ class MyModel extends \yii\db\ActiveRecord
             [['docFiles'], 'file', 'extensions' => 'doc,docx,rtf,pdf,xls,xlsx', 'maxSize'=>20*1024*1024, 'maxFiles'=>10]
         ];
     }
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'imageFile' => Yii::t('app', 'Image File'),
+            'imageFiles' => Yii::t('app', 'Image Files'),
+            'docFile' => Yii::t('app', 'Document File'),
+            'docFiles' => Yii::t('app', 'Document Files'),
+        ];
+    }
 
     protected function saveImage(){
         $this->imageFile = UploadedFile::getInstance($this, 'imageFile');

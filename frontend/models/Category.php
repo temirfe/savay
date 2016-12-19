@@ -30,7 +30,7 @@ class Category extends \yii\db\ActiveRecord
         return [
             [['title'], 'required'],
             [['url'], 'string', 'max' => 20],
-            [['title'], 'string', 'max' => 250],
+            [['title','title_en'], 'string', 'max' => 250],
             [['description'], 'string', 'max' => 500],
         ];
     }
@@ -44,6 +44,7 @@ class Category extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'url' => Yii::t('app', 'Url'),
             'title' => Yii::t('app', 'Title'),
+            'title_en' => Yii::t('app', 'Title in English'),
             'description' => Yii::t('app', 'Description'),
         ];
     }

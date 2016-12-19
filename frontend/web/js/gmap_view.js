@@ -3,8 +3,8 @@ $(window).load(function(){
 });
     function initialize()
     {
-        var latit="25.2063427";
-        var longit="55.2709694";
+        var latit="42.8692601";
+        var longit="74.5907187";
         var mylocation=new google.maps.LatLng(latit, longit);
         var myOptions =
         {

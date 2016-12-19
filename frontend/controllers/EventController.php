@@ -9,7 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use frontend\models\Attendant;
-
+use yii\data\ActiveDataProvider;
 /**
  * EventController implements the CRUD actions for Event model.
  */
@@ -42,6 +42,36 @@ class EventController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionList()
+    {
+        /*if(Yii::$app->language=='ru')
+        {
+            $content_lang='1';
+        }
+        else{
+            $content_lang='0';
+        }*/
+        $upcomingDataProvider = new ActiveDataProvider([
+            'query' => Event::find()->where("date_end>NOW()"),
+            'pagination' => [
+                'pageSize' => 100,
+            ],
+            'sort'=> ['defaultOrder' => ['title'=>SORT_ASC]]
+        ]);
+        $pastDataProvider = new ActiveDataProvider([
+            'query' => Event::find()->where("date_end<NOW()"),
+            'pagination' => [
+                'pageSize' => 100,
+            ],
+            'sort'=> ['defaultOrder' => ['title'=>SORT_ASC]]
+        ]);
+
+        return $this->render('list', [
+            'upcomingDataProvider' => $upcomingDataProvider,
+            'pastDataProvider' => $pastDataProvider,
         ]);
     }
 

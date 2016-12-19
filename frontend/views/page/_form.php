@@ -18,7 +18,6 @@ use iutbay\yii2kcfinder\KCFinder;
     <?= $form->errorSummary($model); ?>
 
     <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'text')->widget(CKEditor::className(), [
@@ -45,7 +44,7 @@ use iutbay\yii2kcfinder\KCFinder;
 
     <?php //echo $form->field($model, 'image')->textInput(['maxlength' => true]); ?>
 
-    <?= $form->field($model, 'category')->dropDownList(["0"=>"General","1"=>"Explore UAE with us", "2"=>"Destinations of your interest"],[]); ?>
+    <?php //echo $form->field($model, 'category')->dropDownList(["0"=>"General","1"=>"Explore UAE with us", "2"=>"Destinations of your interest"],[]); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

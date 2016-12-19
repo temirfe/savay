@@ -6,11 +6,15 @@ use yii\helpers\Html;
 
 $this->title = 'About';
 $this->params['breadcrumbs'][] = $this->title;
+$row=Yii::$app->db->createCommand("SELECT * FROM page WHERE url='about'")->queryOne();
 ?>
-<div class="site-about">
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="site-about container">
+    <div class="row">
+        <div class="col-md-9 img_resp paragraph">
+            <h1><?= Html::encode($row['title']) ?></h1>
+            <br />
+            <?=$row['text']?>
+        </div>
+    </div>
 
-    <p>This is the About page. You may modify the following file to customize its content:</p>
-
-    <code><?= __FILE__ ?></code>
 </div>

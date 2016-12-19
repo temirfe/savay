@@ -3,17 +3,16 @@
 namespace frontend\controllers;
 
 use Yii;
-use frontend\models\Event;
-use frontend\models\EventSearch;
-use frontend\models\ArticleSearch;
+use frontend\models\Banner;
+use frontend\models\BannerSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * EventsController implements the CRUD actions for Event model.
+ * BannerController implements the CRUD actions for Banner model.
  */
-class EventsController extends Controller
+class BannerController extends Controller
 {
     /**
      * @inheritdoc
@@ -31,12 +30,12 @@ class EventsController extends Controller
     }
 
     /**
-     * Lists all Event models.
+     * Lists all Banner models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ArticleSearch();
+        $searchModel = new BannerSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -46,7 +45,7 @@ class EventsController extends Controller
     }
 
     /**
-     * Displays a single Event model.
+     * Displays a single Banner model.
      * @param integer $id
      * @return mixed
      */
@@ -58,13 +57,13 @@ class EventsController extends Controller
     }
 
     /**
-     * Creates a new Event model.
+     * Creates a new Banner model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Event();
+        $model = new Banner();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -76,7 +75,7 @@ class EventsController extends Controller
     }
 
     /**
-     * Updates an existing Event model.
+     * Updates an existing Banner model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -95,7 +94,7 @@ class EventsController extends Controller
     }
 
     /**
-     * Deletes an existing Event model.
+     * Deletes an existing Banner model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -108,15 +107,15 @@ class EventsController extends Controller
     }
 
     /**
-     * Finds the Event model based on its primary key value.
+     * Finds the Banner model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Event the loaded model
+     * @return Banner the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Event::findOne($id)) !== null) {
+        if (($model = Banner::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

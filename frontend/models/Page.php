@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "page".
@@ -29,13 +30,15 @@ class Page extends MyModel
      */
     public function rules()
     {
-        return [
-            [['url', 'title'], 'required'],
+        $rules= [
+            [['title'], 'required'],
             [['text'], 'string'],
             [['category'], 'integer'],
             [['url', 'title'], 'string', 'max' => 20],
             [['image'], 'string', 'max' => 200],
         ];
+
+        return ArrayHelper::merge(parent::rules(),$rules);
     }
 
     /**

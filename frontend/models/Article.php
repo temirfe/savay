@@ -51,18 +51,20 @@ class Article extends MyModel
      */
     public function attributeLabels()
     {
-        return [
+        $rules=[
             'id' => Yii::t('app', 'ID'),
-            'title' => Yii::t('app', 'Title'),
+            'title' => Yii::t('app', 'Subject'),
             'text' => Yii::t('app', 'Text'),
             'image' => Yii::t('app', 'Image'),
             'category_id' => Yii::t('app', 'Category'),
             'expert_id' => Yii::t('app', 'Author'),
-            'expert2_id' => Yii::t('app', 'Author2'),
-            'expert3_id' => Yii::t('app', 'Author3'),
+            'expert2_id' => Yii::t('app', 'Author 2'),
+            'expert3_id' => Yii::t('app', 'Author 3'),
             'date_create' => Yii::t('app', 'Date Create'),
             'footnotes' => Yii::t('app', 'Footnotes'),
         ];
+
+        return ArrayHelper::merge(parent::attributeLabels(),$rules);
     }
 
     public function getCategory()
@@ -120,5 +122,34 @@ class Article extends MyModel
         $html.="</div>";
         
         return $html;
+    }
+
+    public function getAuthors(){
+        $author='';
+        $author2='';
+        $author3='';
+        $and1='';
+        $and2='';
+        if($this->expert_id){ $author=$this->getAuthorLink(1); }
+        if($this->expert2_id){$and1=" ".Yii::t('app','and')." "; $author2=$this->getAuthorLink(2); }
+        if($this->expert3_id){$and1=", "; $and2=" ".Yii::t('app','and')." "; $author3=$this->getAuthorLink(3); }
+        $authors=$author.$and1.$author2.$and2.$author3;
+
+        return $authors;
+    }
+    
+    public function getAuthorLink($number){
+        if($number==2){$title=$this->expert2->title; $id=$this->expert2_id;}
+        else if($number==3){$title=$this->expert3->title; $id=$this->expert3_id;}
+        else{$title=$this->expert->title; $id=$this->expert_id;}
+        return Html::a($title,['/expert/view','id'=>$id],['class'=>'darklink']);
+    }
+
+    public function getLangTitle(){
+        if(Yii::$app->language=='ru-RU'){
+            $msg=$this->category->title;
+        }
+        else $msg=$this->category->title_en;
+        return $msg;
     }
 }

@@ -73,7 +73,7 @@ $experts=ArrayHelper::map($experts,'id','title');
     ]) ?>
 
     <div class="row">
-        <div class="col-md-4"><?= $form->field($model, 'category_id')->dropDownList($categories,['prompt'=>"Select.."]) ?></div>
+        <div class="col-md-4"><?= $form->field($model, 'category_id')->dropDownList($categories,['prompt'=>Yii::t('app','Select').".."]) ?></div>
     </div>
 
     <div class="row">

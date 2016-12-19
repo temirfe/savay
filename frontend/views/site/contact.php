@@ -11,19 +11,19 @@ use frontend\assets\MapAsset;
 
 MapAsset::register($this);
 
-$this->title = 'Contact';
+$this->title = Yii::t('app','Contact');
 $this->params['breadcrumbs'][] = $this->title;
 
 $dao=Yii::$app->db;
 $result = $dao->createCommand("SELECT * FROM page WHERE url='contact'")->queryOne();
 if($result) $text=$result['text']; else $text='';
 ?>
-<div class="site-contact">
+<div class="site-contact container">
     <h1><?= Html::encode($this->title) ?></h1>
     <div class="row">
         <div class="col-md-5">
             <p>
-                If you have business inquiries or other questions, please fill out the following form to contact us. Thank you.
+                <?=Yii::t('app','If you have business inquiries or other questions, please fill out the following form to contact us. Thank you');?>.
             </p>
 
             <div class="row">
@@ -43,7 +43,7 @@ if($result) $text=$result['text']; else $text='';
                     ]) ?>
 
                     <div class="form-group">
-                        <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
+                        <?= Html::submitButton(Yii::t('app','Submit'), ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
                     </div>
 
                     <?php ActiveForm::end(); ?>

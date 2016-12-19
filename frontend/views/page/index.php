@@ -11,7 +11,7 @@ use yii\helpers\StringHelper;
 $this->title = Yii::t('app', 'Pages');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="page-index">
+<div class="page-index container">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>

@@ -43,6 +43,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'about'=>'site/about',
                 'contact'=>'site/contact',
                 'index.php'=>'site/index',
                 '<controller:\w+>/<id:\d+>' => '<controller>/view',

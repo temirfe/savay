@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model frontend\models\Page */
+/* @var $model frontend\models\Banner */
 
-$this->title = Yii::t('app', 'Create Page');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['index']];
+$this->title = Yii::t('app', 'Create Banner');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Banners'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="page-create container">
+<div class="banner-create container">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
