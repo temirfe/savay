@@ -31,7 +31,7 @@ class MyController extends Controller
             $view=[
                 'actions' => ['view'],
                 'allow' => true,
-                'roles' => ['view'],
+                'roles' => ['?'],
             ];
         }
         return [
@@ -53,6 +53,11 @@ class MyController extends Controller
                         'actions' => ['index'],
                         'allow' => true,
                         'roles' => ['crud'],
+                    ],
+                    [
+                        'actions' => ['list'],
+                        'allow' => true,
+                        'roles' => ['?'],
                     ],
                     $view,
                 ],

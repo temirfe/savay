@@ -5,29 +5,13 @@ namespace frontend\controllers;
 use Yii;
 use frontend\models\Banner;
 use frontend\models\BannerSearch;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * BannerController implements the CRUD actions for Banner model.
  */
-class BannerController extends Controller
+class BannerController extends MyController
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
 
     /**
      * Lists all Banner models.

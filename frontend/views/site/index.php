@@ -25,6 +25,9 @@ if(isset($banner['model_name'])){
         $subtitle="<div class='white font13 mt10 roboto'>".$date['start']."</div>";
     }
 }
+
+$articles=Article::find()->orderBy('id DESC')->limit(5)->all();
+$events=Event::find()->where('date_end>NOW()')->orderBy('id DESC')->limit(5)->all();
 ?>
 <?php
 if(!empty($bmodel)){
@@ -33,7 +36,7 @@ if(!empty($bmodel)){
         <div class="slider"><?=Html::img('/images/'.$banner['model_name'].'/'.$banner['model_id'].'/'.$bmodel->image)?></div>
         <div class="slider_title">
             <div class="text-uppercase bold white mb5 font12"><?=$msg?></div>
-            <h1><?= Html::encode($bmodel->title) ?></h1>
+            <h1><?= Html::a($bmodel->title,['/'.$banner['model_name'].'/view','id'=>$bmodel->id],['class'=>'white hover_white']) ?></h1>
             <?=$subtitle?>
         </div>
     </div>
@@ -45,52 +48,24 @@ if(!empty($bmodel)){
 
     <div class="body-content">
 
-        <h3>Special offers</h3>
-        <div class="row">
-            <?php
-            /*foreach($packages as $pack){
-                */?><!--
-                <div class="col-md-4 rel img_pack_box">
-                    <div class="img_pack_wrap">
-                        <?php
-/*                        $img=Html::img("/images/package/".$pack['id']."/s_".$pack['image'],['class'=>'img-responsive']);
-                        echo "<div class=''>".Html::a($img,['package/view','id'=>$pack['id']])."</div>";
-                        */?>
+        <?php
+            if($articles){
+                echo "<h3 class='emprint mb20 color3d font17'>".Yii::t('app','Articles')."</h3>";
+                foreach($articles as $article){
+                    echo $this->render('/article/_list',['model' => $article]);
+                }
+                echo "<div class='mb80'></div>";
+            }
 
-                        <div class="img_pack_title pad15">
-                            <h4 class="mt0 mb2">
-                                <?/*=Html::a($pack['title']."<span class='false_link'></span>",['package/view','id'=>$pack['id']],['class'=>'no_underline black']);*/?>
-                            </h4>
-                            <div class="img_pack_text"><?/*=$pack['description'];*/?></div>
-                        </div>
-                            
-                    </div>
-                </div>
-                --><?php
-/*            }*/
-            ?>
-        </div>
-
-        <br />
-        <h3>Explore <span class="highlight gold">POLITICS</span> with us</h3>
-        <div class="row">
-            <?php
-            /*foreach($cities as $city){
-                */?><!--
-                <div class="col-sm-3 rel img_thumb_box">
-                    <div class="photo_thumb">
-                        <?php
-/*                        $img=Html::img("/images/city/".$city['id']."/s_".$city['image'],['class'=>'img-responsive']);
-                        echo Html::a($img,['city/view','id'=>$city['id']]);
-                        */?>
-                    </div>
-
-                    <div class="abs img_title"><span><?/*=Html::a($city['title']."<div class='false_link'></div>",['city/view','id'=>$city['id']],['class'=>'no_underline']);*/?></span></div>
-                </div>
-                --><?php
-/*            }*/
-            ?>
-        </div>
+            if($events){
+                echo "<h3 class='emprint color3d font17 mb20'>".Yii::t('app','Events')."</h3>";
+                echo "<div class='row'>";
+                foreach($events as $event){
+                    echo "<div class='col-md-6'>".$this->render('/event/_list',['model' => $event, 'time'=>'upcoming'])."</div>";
+                }
+                echo "</div>";
+            }
+        ?>
 
     </div>
 </div>

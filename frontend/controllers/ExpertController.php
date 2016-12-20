@@ -6,29 +6,13 @@ use Yii;
 use frontend\models\Expert;
 use frontend\models\ExpertSearch;
 use yii\data\ActiveDataProvider;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * ExpertController implements the CRUD actions for Expert model.
  */
-class ExpertController extends Controller
+class ExpertController extends MyController
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
 
     /**
      * Lists all Expert models.

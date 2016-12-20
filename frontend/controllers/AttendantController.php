@@ -5,29 +5,13 @@ namespace frontend\controllers;
 use Yii;
 use frontend\models\Attendant;
 use frontend\models\AttendantSearch;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * AttendantController implements the CRUD actions for Attendant model.
  */
-class AttendantController extends Controller
+class AttendantController extends MyController
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
 
     /**
      * Lists all Attendant models.

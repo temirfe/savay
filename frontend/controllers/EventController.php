@@ -5,31 +5,14 @@ namespace frontend\controllers;
 use Yii;
 use frontend\models\Event;
 use frontend\models\EventSearch;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use frontend\models\Attendant;
 use yii\data\ActiveDataProvider;
 /**
  * EventController implements the CRUD actions for Event model.
  */
-class EventController extends Controller
+class EventController extends MyController
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
-
     /**
      * Lists all Event models.
      * @return mixed

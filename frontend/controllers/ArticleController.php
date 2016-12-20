@@ -5,28 +5,35 @@ namespace frontend\controllers;
 use Yii;
 use frontend\models\Article;
 use frontend\models\ArticleSearch;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use yii\data\ActiveDataProvider;
 
 /**
  * ArticleController implements the CRUD actions for Article model.
  */
-class ArticleController extends Controller
+class ArticleController extends MyController
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
+
+    public function actionList()
     {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
+        /*if(Yii::$app->language=='ru')
+        {
+            $content_lang='1';
+        }
+        else{
+            $content_lang='0';
+        }*/
+        $dataProvider = new ActiveDataProvider([
+            'query' => Article::find(),
+            'pagination' => [
+                'pageSize' => 20,
             ],
-        ];
+            'sort'=> ['defaultOrder' => ['id'=>SORT_DESC]]
+        ]);
+
+        return $this->render('list', [
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**

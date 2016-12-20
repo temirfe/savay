@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel frontend\models\ArticleSearch */
@@ -9,6 +10,8 @@ use yii\grid\GridView;
 
 $this->title = Yii::t('app', 'Articles');
 $this->params['breadcrumbs'][] = $this->title;
+$rows=Yii::$app->db->createCommand("SELECT id, title FROM category")->queryAll();
+$ctg=ArrayHelper::map($rows,'id','title');
 ?>
 <div class="article-index container">
 
@@ -22,18 +25,30 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
+            ['attribute' => 'id', 'contentOptions'=>['width'=>80]],
             'title',
-            'text:ntext',
-            'image',
-            'category_id',
+            [
+                'attribute' => 'image',
+                'format' => 'raw',
+                'value' => function($model) {
+                    return Html::img('/images/article/'.$model->id.'/s_'.$model->image,['class'=>'w100']);
+                },
+                'contentOptions'=>['width'=>180]
+            ],
+            [
+                'attribute' => 'category_id',
+                'format' => 'raw',
+                'value' => function($model) use($ctg) {
+                    return $ctg[$model->category_id];
+                },
+                'filter' => Html::activeDropDownList($searchModel, 'category_id', $ctg,['class'=>'form-control','prompt' => Yii::t('app','All')]),
+                'contentOptions'=>['width'=>180]
+            ],
             // 'expert_id',
             // 'date_create',
             // 'footnotes',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn', 'contentOptions'=>['width'=>80]],
         ],
     ]); ?>
 </div>
