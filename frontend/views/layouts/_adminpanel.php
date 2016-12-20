@@ -67,7 +67,7 @@ else if($controller=='category') $category_active="active";
                     </div>
                 <?php
                 }
-                elseif(in_array($action,['index','admin','update']) && Yii::$app->controller->id!='site')
+                elseif(in_array($action,['index','admin','update','list']) && Yii::$app->controller->id!='site')
                 {
                     ?>
                     <div class="operations" style="padding: 4px 13px; background-color: #000;">
