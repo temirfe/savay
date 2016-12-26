@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Expert */
 
-$this->title = $model->title;
+$this->title = $model->title.' | '.Yii::t('app','CPLR');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Experts'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 

@@ -24,10 +24,12 @@ if(!isset($dao)) $dao=Yii::$app->db;
 
 if($controller=='site' && $action=="about") $about_active=true; else $about_active=false;
 if($controller=='expert') $expert_active=true; else $expert_active=false;
+if($controller=='article') $article_active=true; else $article_active=false;
+if($controller=='event') $event_active=true; else $event_active=false;
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
+<html lang="<?= Yii::$app->language ?>" prefix="og: http://ogp.me/ns#">
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -39,6 +41,23 @@ if($controller=='expert') $expert_active=true; else $expert_active=false;
     <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
 </head>
 <body data-spy="scroll" data-target="#myScrollspy" data-offset="140" id="top">
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '382095758792121',
+            xfbml      : true,
+            version    : 'v2.8'
+        });
+    };
+
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
 <?php $this->beginBody() ?>
 
 <div class="wrap">
@@ -59,8 +78,9 @@ if($controller=='expert') $expert_active=true; else $expert_active=false;
     $menuItems = [
         ['label' => Yii::t('app','Home'), 'url' => ['/site/index']],
         ['label' => Yii::t('app','About us'), 'url' => ['/about'], 'active'=>$about_active],
+        ['label' => Yii::t('app','Articles'), 'url' => ['/article/list'], 'active'=>$article_active],
         ['label' => Yii::t('app','Experts'), 'url' => ['/expert/list'], 'active'=>$expert_active],
-        ['label' => Yii::t('app','Events'), 'url' => ['/event/list']],
+        ['label' => Yii::t('app','Events'), 'url' => ['/event/list'],'active'=>$event_active],
         ['label' => Yii::t('app','Contact'), 'url' => ['/site/contact']],
     ];
     if (Yii::$app->user->isGuest) {

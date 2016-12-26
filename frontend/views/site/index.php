@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use frontend\models\Article;
 use frontend\models\Event;
 //$this->title = 'Центр политико-правовых исследований';
-$this->title = 'ЦППИ';
+$this->title = Yii::t('app','CPLR | Center for political and legal research');
 $dao=Yii::$app->db;
 $banner=$dao->createCommand("SELECT * FROM banner ORDER BY id DESC LIMIT 1")->queryOne();
 $msg='';$subtitle='';

@@ -50,3 +50,33 @@ $('.js_register_to_event').click(function (e) {
     $('.js_attendant_form').show();
     $(this).hide();
 });
+
+//facebook share article
+$('.js_fb_share').click(function (e) {
+    e.preventDefault();
+    var link=$(this).attr('href');
+    FB.ui({
+        method: 'share',
+        display: 'popup',
+        href: link
+    }, function(response){});
+});
+
+//twitter share
+$('.popup').click(function(event) {
+    var width  = 575,
+        height = 400,
+        left   = ($(window).width()  - width)  / 2,
+        top    = ($(window).height() - height) / 2,
+        url    = this.href,
+        title=$(this).attr('title'),
+        opts   = 'status=1' +
+            ',width='  + width  +
+            ',height=' + height +
+            ',top='    + top    +
+            ',left='   + left;
+
+    window.open(url, title, opts);
+
+    return false;
+});

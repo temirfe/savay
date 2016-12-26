@@ -8,12 +8,12 @@ use yii\widgets\ListView;
 /* @var $upcomingDataProvider yii\data\ActiveDataProvider */
 /* @var $pastDataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Events');
+$this->title = Yii::t('app', 'Events').' | '.Yii::t('app','CPLR');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="expert-index container">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Yii::t('app', 'Events') ?></h1>
 
     <h3><?=Yii::t('app','Upcoming events'); ?></h3>
 

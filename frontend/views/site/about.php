@@ -4,7 +4,7 @@
 
 use yii\helpers\Html;
 
-$this->title = 'About';
+$this->title = Yii::t('app','About us').' | '.Yii::t('app','CPLR');
 $this->params['breadcrumbs'][] = $this->title;
 $row=Yii::$app->db->createCommand("SELECT * FROM page WHERE url='about'")->queryOne();
 ?>

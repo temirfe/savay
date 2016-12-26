@@ -6,11 +6,19 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Article */
 
-$this->title = $model->title;
+$this->title = $model->title.' | '.Yii::t('app','CPLR');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Articles'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-
+Yii::$app->view->registerMetaTag([
+    'property' => 'og:url',
+    'content' => Yii::$app->request->absoluteUrl
+]);
+Yii::$app->view->registerMetaTag(['property' => 'og:type','content' => 'article']);
+Yii::$app->view->registerMetaTag(['property' => 'og:title','content' => $model->title]);
+Yii::$app->view->registerMetaTag(['property' => 'og:description','content' => $model->title]);
+Yii::$app->view->registerMetaTag(['property' => 'og:image','content' => Yii::$app->request->url.'/images/article/'.$model->id.'/'.$model->image]);
 ?>
+
 <div class="article-view">
     <?php
     if($model->image){
@@ -38,6 +46,25 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="container">
         <section class="row article">
             <div class="col-md-8">
+                <div class="mb10">
+                    <a class="share-facebook share-icon js_fb_share" rel="nofollow" href="#" title="<?=Yii::t('app','Click to share on Facebook');?>">
+                        <span></span>
+                    </a>
+                    <a class="share-twitter share-icon popup twitter-share-button" rel="nofollow" href="https://twitter.com/intent/tweet?text=<?=urlencode($model->title).'&url='.Yii::$app->request->absoluteUrl?>" data-title="Twitter" title="<?=Yii::t('app','Click to share on Twitter');?>">
+                        <span></span>
+                    </a>
+                    <a class="share-linkedin share-icon popup" rel="nofollow"
+                       href="https://www.linkedin.com/shareArticle?mini=true&url=<?=Yii::$app->request->absoluteUrl?>&title=<?=urlencode($model->title)?>&source=ЦППИ&image=http://static.bigstockphoto.com/images/homepage/2016_bigstock_picks.jpg"
+                       title="<?=Yii::t('app','Click to share on LinkedIn');?>">
+                        <span></span>
+                    </a>
+                    <a class="share-email share-icon" href="mailto:?subject=<?=$model->title?>&body=<?=Yii::$app->request->absoluteUrl?>" title="<?=Yii::t('app','Email this page');?>" rel="nofollow">
+                        <span></span>
+                    </a>
+                    <a class="share-print share-icon" href="http://printfriendly.com" onclick="window.print();return false" style="text-decoration: none; color: #6D9F00;" title="<?=Yii::t('app','Click to print');?>" rel="nofollow">
+                        <span></span>
+                    </a>
+                </div>
                 <div class="color9 mt20 mb24 roboto font13">
                     <div class='afterdot pull-left'><?=$model->getAuthors()?></div>
                     <time class="date"><?=Yii::$app->formatter->asDate($model->date_create)?></time>

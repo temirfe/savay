@@ -7,12 +7,12 @@ use yii\widgets\ListView;
 /* @var $searchModel frontend\models\ExpertSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Articles');
+$this->title = Yii::t('app', 'Articles').' | '.Yii::t('app','CPLR');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="expert-index container">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Yii::t('app', 'Articles') ?></h1>
 
     <?= ListView::widget([
         'dataProvider' => $dataProvider,

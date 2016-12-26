@@ -11,7 +11,7 @@ use frontend\assets\MapAsset;
 
 MapAsset::register($this);
 
-$this->title = Yii::t('app','Contact');
+$this->title = Yii::t('app','Contact').' | '.Yii::t('app','CPLR');
 $this->params['breadcrumbs'][] = $this->title;
 
 $dao=Yii::$app->db;
@@ -19,7 +19,7 @@ $result = $dao->createCommand("SELECT * FROM page WHERE url='contact'")->queryOn
 if($result) $text=$result['text']; else $text='';
 ?>
 <div class="site-contact container">
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Yii::t('app','Contact') ?></h1>
     <div class="row">
         <div class="col-md-5">
             <p>

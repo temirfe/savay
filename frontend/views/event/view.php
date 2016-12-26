@@ -8,7 +8,7 @@ use yii\bootstrap\Alert;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Event */
 /* @var $amodel frontend\models\Attendant */
-$this->title = $model->title;
+$this->title = $model->title.' | '.Yii::t('app','CPLR');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Events'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 

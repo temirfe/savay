@@ -606,3 +606,23 @@ h1.event{text-transform: none; font-size:30px; margin-top: 5px; border-bottom:no
     width: 9px;
 }
 a.hover_white:hover{color:#fff;}
+.share-facebook span{background-image: url("facebook.svg");}
+.share-twitter span{background-image: url("twitter.svg");}
+.share-linkedin span{background-image: url("linkedin.svg");}
+.share-email span{background-image: url("envelope.svg");}
+.share-icon span{
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    background-size: 30px 30px;
+    margin-right:2px;
+}
+.share-print span{background-image: url("pri.svg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 15px 15px;
+    border: 2px solid #000;
+    border-radius: 15px;}
+.share-icon {
+    display: inline-block;
+}
