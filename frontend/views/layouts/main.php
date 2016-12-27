@@ -27,6 +27,7 @@ if($controller=='site' && $action=="about") $about_active=true; else $about_acti
 if($controller=='expert') $expert_active=true; else $expert_active=false;
 if($controller=='article') $article_active=true; else $article_active=false;
 if($controller=='event') $event_active=true; else $event_active=false;
+if($controller=='site' && $action=="partners") $partner_active=true; else $partner_active=false;
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -80,8 +81,9 @@ if($controller=='event') $event_active=true; else $event_active=false;
         ['label' => Yii::t('app','Home'), 'url' => ['/site/index']],
         ['label' => Yii::t('app','About us'), 'url' => ['/about'], 'active'=>$about_active],
         ['label' => Yii::t('app','Articles'), 'url' => ['/article/list'], 'active'=>$article_active],
-        ['label' => Yii::t('app','Experts'), 'url' => ['/expert/list'], 'active'=>$expert_active],
         ['label' => Yii::t('app','Events'), 'url' => ['/event/list'],'active'=>$event_active],
+        ['label' => Yii::t('app','Our partners'), 'url' => ['/partners'],'active'=>$partner_active],
+        ['label' => Yii::t('app','Experts'), 'url' => ['/expert/list'], 'active'=>$expert_active],
         ['label' => Yii::t('app','Contact'), 'url' => ['/site/contact']],
         ['label' => Yii::t('app','Search')."<span class='glyphicon glyphicon-search search_icon'></span>", 'url' => ['/site/search'],'encode'=>false,
             'linkOptions'=>['class'=>'search small_nav','data-toggle'=>"modal", 'data-target'=>"#search-modal"]],

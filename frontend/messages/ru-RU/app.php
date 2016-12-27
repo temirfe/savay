@@ -122,5 +122,7 @@ return [
     'Search everywhere' => 'Искать везде',
     'All rights reserved.' => 'Все права защищены',
     'Follow us on ' => 'Следите за нами в соцсетях: ',
+    'Our partners' => 'Наши партнёры',
+    'Attendants' => 'Участники',
     '' => '',
 ];

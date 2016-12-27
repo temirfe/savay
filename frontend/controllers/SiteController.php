@@ -211,6 +211,16 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
+    /**
+     * Displays about page.
+     *
+     * @return mixed
+     */
+    public function actionPartners()
+    {
+        return $this->render('partners');
+    }
+
     public function actionExplore()
     {
         $dao=Yii::$app->db;

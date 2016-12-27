@@ -17,6 +17,7 @@ $event_active='';
 $expert_active='';
 $banner_active='';
 $category_active='';
+$attendant_active='';
 $controller=Yii::$app->controller->id;
 if($controller=='page') $pages_active="active";
 else if($controller=='user') $users_active="active";
@@ -25,6 +26,7 @@ else if($controller=='event') $event_active="active";
 else if($controller=='expert') $expert_active="active";
 else if($controller=='banner') $banner_active="active";
 else if($controller=='category') $category_active="active";
+else if($controller=='attendant') $attendant_active="active";
 ?>
 <div class="admpanel_top">
       <div class="admpanel-title">
@@ -39,6 +41,7 @@ else if($controller=='category') $category_active="active";
                 <div class="<?=$expert_active?>"><span class='panel-icon glyphicon glyphicon-briefcase'></span><?=Html::a(Yii::t('app','Experts'), ['/expert/index']); ?></div>
                 <div class="<?=$category_active?>"><span class='panel-icon glyphicon glyphicon-tasks'></span><?=Html::a(Yii::t('app','Categories'), ['/category/index']); ?></div>
                 <div class="<?=$banner_active?>"><span class='panel-icon glyphicon glyphicon-bookmark'></span><?=Html::a(Yii::t('app','Home banner'), ['/banner/index']); ?></div>
+                <div class="<?=$attendant_active?>"><span class='panel-icon glyphicon glyphicon-copy'></span><?=Html::a(Yii::t('app','Attendants'), ['/attendant/index']); ?></div>
                 <div class="<?=$users_active?>"><span class='panel-icon glyphicon glyphicon-user'></span><?=Html::a(Yii::t('app','Users'), ['/user/index']); ?></div>
              </div>
              <div class="clear"></div>

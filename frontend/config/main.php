@@ -45,6 +45,7 @@ return [
             'showScriptName' => false,
             'rules' => [
                 'about'=>'site/about',
+                'partners'=>'site/partners',
                 'contact'=>'site/contact',
                 'index.php'=>'site/index',
                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
