@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'summary'=>'',
         'options'=>['class'=>'item-view row'],
         'itemView' => function ($model, $key, $index, $widget) {
-            return $this->render('_list',['model' => $model, 'time'=>'upcoming']);
+            return $this->render('_list',['model' => $model]);
         },
     ]) ?>
 
@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'summary'=>'',
         'options'=>['class'=>'item-view row'],
         'itemView' => function ($model, $key, $index, $widget) {
-            return $this->render('_list',['model' => $model, 'time'=>'past']);
+            return $this->render('_list',['model' => $model]);
         },
     ]) ?>
 </div>

@@ -9,6 +9,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
+use yii\bootstrap\Modal;
 
 AppAsset::register($this);
 $controller=Yii::$app->controller->id;
@@ -82,15 +83,17 @@ if($controller=='event') $event_active=true; else $event_active=false;
         ['label' => Yii::t('app','Experts'), 'url' => ['/expert/list'], 'active'=>$expert_active],
         ['label' => Yii::t('app','Events'), 'url' => ['/event/list'],'active'=>$event_active],
         ['label' => Yii::t('app','Contact'), 'url' => ['/site/contact']],
+        ['label' => Yii::t('app','Search')."<span class='glyphicon glyphicon-search search_icon'></span>", 'url' => ['/site/search'],'encode'=>false,
+            'linkOptions'=>['class'=>'search small_nav','data-toggle'=>"modal", 'data-target'=>"#search-modal"]],
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => Yii::t('app','Login'), 'url' => ['/site/login']];
+        $menuItems[] = ['label' => Yii::t('app','Login')."<span class='glyphicon glyphicon-log-in ml5'></span>",'encode'=>false, 'url' => ['/site/login'], 'linkOptions'=>['class'=>'small_nav mt1']];
     } else {
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
                 Yii::t('app','Logout').' (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
+                ['class' => 'btn btn-link logout darklink mt1']
             )
             . Html::endForm()
             . '</li>';
@@ -109,12 +112,35 @@ if($controller=='event') $event_active=true; else $event_active=false;
 </div>
 
 <footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; cppi <?= date('Y') ?></p>
+    <div class="large-container pb10">
+        <div class="pull-left mr10 mt5">
+            <?=Yii::t('app','Follow us on ')?>
+        </div>
+        <div class="text-left">
+            <a class="share-facebook share-icon" rel="nofollow" href="#" title="<?=Yii::t('app','Facebook');?>">
+                <span></span>
+            </a>
+            <a class="share-twitter share-icon" rel="nofollow" href="#" title="<?=Yii::t('app','Twitter');?>">
+                <span></span>
+            </a>
+            <a class="share-linkedin share-icon" rel="nofollow" href="#" title="<?=Yii::t('app','LinkedIn');?>">
+                <span></span>
+            </a>
+        </div>
+        <p class="text-center mb0 font12"><?=Yii::t('app','All rights reserved.')?> &copy; <?= date('Y') ?></p>
+
     </div>
 </footer>
 <a href="#" class="scrollToTop"><span class="glyphicon glyphicon-arrow-up"></span></a>
 <?php $this->endBody() ?>
+<?php
+$modal = Modal::begin([
+    'id' => 'search-modal',
+    'header' => Html::tag('h4', Yii::t('app', 'Search'), ['class' => 'modal-title']),
+]);
+echo $this->render('/site/_search_form',['ctg'=>'','queryWord'=>'']);
+$modal::end();
+?>
 </body>
 </html>
 <?php $this->endPage() ?>

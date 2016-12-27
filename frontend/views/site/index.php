@@ -4,6 +4,7 @@
 use yii\helpers\Html;
 use frontend\models\Article;
 use frontend\models\Event;
+use yii\caching\DbDependency;
 //$this->title = 'Центр политико-правовых исследований';
 $this->title = Yii::t('app','CPLR | Center for political and legal research');
 $dao=Yii::$app->db;
@@ -25,9 +26,19 @@ if(isset($banner['model_name'])){
         $subtitle="<div class='white font13 mt10 roboto'>".$date['start']."</div>";
     }
 }
+$dep = new DbDependency();
+$dep->sql = 'SELECT MAX(id) FROM article';
+$article = $dao->cache(function ($dao) {
+    return Article::find()->where("image<>''")->orderBy('id DESC')->one();
+}, 600, $dep);
+if($article){
+    $articles = $dao->cache(function ($dao) use ($article) {
+        return Article::find()->select('id,title')->where("id<>{$article->id}")->orderBy('id DESC')->limit(10)->all();
+    }, 600, $dep);
+}
 
-$articles=Article::find()->orderBy('id DESC')->limit(5)->all();
-$events=Event::find()->where('date_end>NOW()')->orderBy('id DESC')->limit(5)->all();
+//$events=Event::find()->where('date_end>NOW()')->orderBy('id DESC')->limit(5)->all();
+$events=Event::find()->orderBy('id DESC')->limit(5)->all();
 ?>
 <?php
 if(!empty($bmodel)){
@@ -44,28 +55,57 @@ if(!empty($bmodel)){
 }
 ?>
 
-<div class="site-index container">
+<div class="site-index large-container oh pb20">
 
     <div class="body-content">
-
-        <?php
-            if($articles){
-                echo "<h3 class='emprint mb20 color3d font17'>".Yii::t('app','Articles')."</h3>";
-                foreach($articles as $article){
-                    echo $this->render('/article/_list',['model' => $article]);
-                }
-                echo "<div class='mb80'></div>";
-            }
-
+        <div class="col-md-4 oh">
+            <?php
             if($events){
                 echo "<h3 class='emprint color3d font17 mb20'>".Yii::t('app','Events')."</h3>";
-                echo "<div class='row'>";
                 foreach($events as $event){
-                    echo "<div class='col-md-6'>".$this->render('/event/_list',['model' => $event, 'time'=>'upcoming'])."</div>";
+                    echo "<div class='mb20'>".$this->render('/event/_list',['model' => $event])."</div>";
                 }
-                echo "</div>";
             }
-        ?>
+            ?>
+        </div>
+        <div class="col-md-4 oh">
+            <?php
+            if($article){
+                echo "<h3 class='emprint mb20 color3d font17'>".$article->getLangTitle()."</h3>";
+                ?>
+                <div class='mb1'>
+                    <?php
+                    if($article->image){
+                        $img=Html::img("/images/article/".$article->id."/s_".$article->image,['class'=>'img-responsive']);
+                        echo Html::a($img,['/article/view','id'=>$article->id],['class'=>'img-responsive rel js_des_list_img']);
+
+                    }
+                    ?>
+                </div>
+
+                <div class="oh">
+                    <h3><?=Html::a($article->title,['/article/view','id'=>$article->id],['class'=>'black']); ?></h3>
+                    <div class="color9 mt10 roboto font13">
+                        <div class='afterdot pull-left'><?=$article->getAuthors()?></div>
+                        <time class="date"><?=Yii::$app->formatter->asDate($article->date_create)?></time>
+                    </div>
+                </div>
+            <?php
+            }
+            ?>
+        </div>
+        <div class="col-md-4 oh">
+            <?php
+            if(!empty($articles)){
+                echo "<h3 class='emprint mb15 color3d font17'>".Yii::t('app','Articles')."</h3>";
+                foreach($articles as $article){
+                    echo Html::a("<span class='mr4 block pull-left'>—</span><span class='oh block'>".$article->title."</span>",['/article/view','id'=>$article->id],['class'=>'mb5 iblock color3 roboto no_underline w100']);
+                }
+            }
+            ?>
+        </div>
+
+
 
     </div>
 </div>

@@ -20,6 +20,7 @@ use yii\helpers\ArrayHelper;
  * @property string $past_positions
  * @property string $education
  * @property string $cv
+ * @property string $content
  */
 class Expert extends MyModel
 {
@@ -38,7 +39,7 @@ class Expert extends MyModel
     {
         $rules= [
             [['title'], 'required'],
-            [['text'], 'string'],
+            [['text','content'], 'string'],
             [['title', 'description'], 'string', 'max' => 500],
             [['email', 'phone'], 'string', 'max' => 20],
             [['image'], 'string', 'max' => 200],
@@ -70,5 +71,20 @@ class Expert extends MyModel
             'imageFile'=>Yii::t('app', 'Image'),
             'docFiles'=>Yii::t('app', 'Upload files'),
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+
+            $this->content=$this->title." | ".$this->description." | ".$this->email." | ".$this->phone." | ".$this->text." | ".$this->expertise_areas." | ".$this->current_positions." | ".$this->past_positions." | ".$this->education;
+
+            return true;
+        } else {
+            return false;
+        }
     }
 }

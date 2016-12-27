@@ -34,7 +34,7 @@ $articles=Yii::$app->db->createCommand("SELECT id, title FROM article WHERE expe
     </div>
     <div class="text-center bbblue mb40 pb20">
         <?=$img?>
-        <h1 class="h1_2"><?= Html::encode($this->title) ?></h1>
+        <h1 class="h1_2"><?= Html::encode($model->title) ?></h1>
         <div class="font18 mb10"><?=$model->description?></div>
         <?=$email?>
     </div>

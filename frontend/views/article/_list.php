@@ -4,8 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel frontend\models\ExpertSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $model frontend\models\Article*/
 ?>
 
 <div class='pull-left article-thumb mr20'>

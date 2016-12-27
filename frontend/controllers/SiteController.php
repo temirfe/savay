@@ -13,7 +13,8 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use yii\web\UploadedFile;
-
+use yii\db\Query;
+use yii\helpers\ArrayHelper;
 /**
  * Site controller
  */
@@ -82,8 +83,66 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $dao=Yii::$app->db;
-        return $this->render('index',['cities'=>'','packages'=>'']);
+        return $this->render('index');
+    }
+
+    public function actionSearch()
+    {
+        $page='';
+        $expert='';
+        $article='';
+        $event='';
+        
+        $queryWord=Yii::$app->request->get('search');
+        $ctg=Yii::$app->request->get('category');
+        if(Yii::$app->language=='ru'){$langInt='1';} else{$langInt='0';}
+        if($queryWord && strlen($queryWord)>=3)
+        {
+            //$results=$pages||$news || $events ? array_merge($pages, $news, $events):null;
+
+            $query=new Query();
+            if($ctg=='all' || $ctg=='page'){
+                $page=$query->select(['id', 'title','text'])
+                    ->from('page')
+                    ->where("title LIKE :search OR text LIKE :search", [':search' =>"%{$queryWord}%"])
+                    ->all();
+            }
+            if($ctg=='all' || $ctg=='article'){
+                $article=$query->select(['id', 'title','text'])
+                    ->from('article')
+                    ->where("title LIKE :search OR text LIKE :search", [':search' =>"%{$queryWord}%"])
+                    ->all();
+            }
+            if($ctg=='all' || $ctg=='event'){
+                $event=$query->select(['id', 'title','text'])
+                    ->from('event')
+                    ->where("title LIKE :search OR text LIKE :search", [':search' =>"%{$queryWord}%"])
+                    ->all();
+            }
+            if($ctg=='all' || $ctg=='expert'){
+                $expert=$query->select(['id', 'title','description','image'])
+                    ->from('expert')
+                    ->where("content LIKE :search", [':search' =>"%{$queryWord}%"])
+                    ->all();
+            }
+            /*$decree=$query->select(['id', 'title','content'])
+                ->from('decree')
+                ->where("ru='{$langInt}' AND (title LIKE :search OR content LIKE :search)", [':search' =>"%{$_POST['search']}%"])
+                ->all();
+            $gallery=$query->select(['id', 'title','title_ru','description','description_ru'])
+                ->from('gallery')
+                ->where('title LIKE :search OR title_ru LIKE :search OR description LIKE :search or description_ru LIKE :search', [':search' =>"%{$_POST['search']}%"])
+                ->all();*/
+        }
+        return $this->render('searchResult',[
+            'page'=>$page,
+            'article'=>$article,
+            'event'=>$event,
+            'expert'=>$expert,
+            'langInt'=>$langInt,
+            'queryWord'=>$queryWord,
+            'ctg'=>$ctg
+        ]);
     }
 
     /**

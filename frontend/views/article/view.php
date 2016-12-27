@@ -66,7 +66,12 @@ Yii::$app->view->registerMetaTag(['property' => 'og:image','content' => Yii::$ap
                     </a>
                 </div>
                 <div class="color9 mt20 mb24 roboto font13">
-                    <div class='afterdot pull-left'><?=$model->getAuthors()?></div>
+                    <?php
+                        if($authors=$model->getAuthors()){
+                            echo "<div class='afterdot pull-left'>{$authors}</div>";
+                        }
+                    ?>
+                    
                     <time class="date"><?=Yii::$app->formatter->asDate($model->date_create)?></time>
                 </div>
 

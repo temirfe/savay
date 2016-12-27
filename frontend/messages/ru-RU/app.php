@@ -109,6 +109,7 @@ return [
     'Author 3' => 'Автор 3',
     'Footnotes' => 'Сноска',
     'All' => 'Все',
+    'Center for political and legal research' => 'Центр политико-правовых исследований',
     'CPLR | Center for political and legal research' => 'ЦППИ | Центр политико-правовых исследований',
     'CPLR' => 'ЦППИ',
     'Click to share on Facebook' => 'Поделиться на Фейсбуке',
@@ -116,5 +117,10 @@ return [
     'Click to share on LinkedIn' => 'Поделиться на LinkedIn',
     'Email this page' => 'Отправить на почту',
     'Click to print' => 'Распечатать',
+    'Search' => 'Поиск',
+    'Search Results' => 'Результаты поиска',
+    'Search everywhere' => 'Искать везде',
+    'All rights reserved.' => 'Все права защищены',
+    'Follow us on ' => 'Следите за нами в соцсетях: ',
     '' => '',
 ];
