@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $thetitle;
             <div class="search-result" >
                 <div class="title"><?=Html::a($title, ['/page/view','id'=>$result['id']]);?></div>
                 <?php
-                $text=StringHelper::truncate($result['content'],50,'...');
+                $text=StringHelper::truncateWords($result['content'],50,'...');
                 $text=preg_replace("/({$queryWord})/iu", "<span class='founded' >$1</span>", $text);
                 echo $text;?>
             </div>
@@ -39,9 +39,18 @@ $this->params['breadcrumbs'][] = $thetitle;
             $title=preg_replace("/({$queryWord})/iu", "<span class='founded' >$1</span>", $result['title']);
             ?>
             <div class="search-result" >
+                <div class='pull-left article-thumb mr20'>
+                    <?php
+                    if($result['image']){
+                        $img=Html::img("/images/article/".$result['id']."/s_".$result['image'],['class'=>'img-responsive']);
+                        echo Html::a($img,['/article/view','id'=>$result['id']],['class'=>'img-responsive rel js_des_list_img']);
+
+                    }
+                    ?>
+                </div>
                 <div class="title"><?=Html::a($title, ['/article/view','id'=>$result['id']]);?></div>
                 <?php
-                $text=StringHelper::truncate($result['text'],50,'...');
+                $text=StringHelper::truncateWords($result['text'],50,'...');
                 $text=preg_replace("/({$queryWord})/iu", "<span class='founded' >$1</span>", $text);
                 echo $text;?>
             </div>
@@ -56,7 +65,7 @@ $this->params['breadcrumbs'][] = $thetitle;
             <div class="search-result" >
                 <div class="title"><?=Html::a($title, ['/event/view','id'=>$result['id']]);?></div>
                 <?php
-                $text=StringHelper::truncate($result['text'],50,'...');
+                $text=StringHelper::truncateWords($result['text'],50,'...');
                 $text=preg_replace("/({$queryWord})/iu", "<span class='founded' >$1</span>", $text);
                 echo $text;?>
             </div>
@@ -86,7 +95,7 @@ $this->params['breadcrumbs'][] = $thetitle;
                 <div class='pull-left mr15'><?=$url?></div>
                 <div class="title"><?=Html::a($title, ['/expert/view','id'=>$result['id']]);?></div>
                 <?php
-                $text=StringHelper::truncate($result['description'],50,'...');
+                $text=StringHelper::truncateWords($result['description'],50,'...');
                 $text=preg_replace("/({$queryWord})/iu", "<span class='founded' >$1</span>", $text);
                 echo $text;?>
             </div>

@@ -9,14 +9,10 @@ use yii\widgets\DetailView;
 $this->title = $model->title.' | '.Yii::t('app','CPLR');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Articles'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-Yii::$app->view->registerMetaTag([
-    'property' => 'og:url',
-    'content' => Yii::$app->request->absoluteUrl
-]);
-Yii::$app->view->registerMetaTag(['property' => 'og:type','content' => 'article']);
 Yii::$app->view->registerMetaTag(['property' => 'og:title','content' => $model->title]);
+Yii::$app->view->registerMetaTag(['property' => 'og:image','content' => 'http://center.kg/images/article/'.$model->id.'/'.$model->image]);
 Yii::$app->view->registerMetaTag(['property' => 'og:description','content' => $model->title]);
-Yii::$app->view->registerMetaTag(['property' => 'og:image','content' => Yii::$app->request->url.'/images/article/'.$model->id.'/'.$model->image]);
+Yii::$app->view->registerMetaTag(['property' => 'og:url','content' => Yii::$app->request->absoluteUrl]);
 ?>
 
 <div class="article-view">
@@ -47,14 +43,14 @@ Yii::$app->view->registerMetaTag(['property' => 'og:image','content' => Yii::$ap
         <section class="row article">
             <div class="col-md-8">
                 <div class="mb10">
-                    <a class="share-facebook share-icon js_fb_share" rel="nofollow" href="#" title="<?=Yii::t('app','Click to share on Facebook');?>">
+                    <a class="share-facebook share-icon js_fb_share" rel="nofollow" href="<?=Yii::$app->request->absoluteUrl?>" title="<?=Yii::t('app','Click to share on Facebook');?>">
                         <span></span>
                     </a>
                     <a class="share-twitter share-icon popup twitter-share-button" rel="nofollow" href="https://twitter.com/intent/tweet?text=<?=urlencode($model->title).'&url='.Yii::$app->request->absoluteUrl?>" data-title="Twitter" title="<?=Yii::t('app','Click to share on Twitter');?>">
                         <span></span>
                     </a>
                     <a class="share-linkedin share-icon popup" rel="nofollow"
-                       href="https://www.linkedin.com/shareArticle?mini=true&url=<?=Yii::$app->request->absoluteUrl?>&title=<?=urlencode($model->title)?>&source=ЦППИ&image=http://static.bigstockphoto.com/images/homepage/2016_bigstock_picks.jpg"
+                       href="https://www.linkedin.com/shareArticle?mini=true&url=<?=Yii::$app->request->absoluteUrl?>&title=<?=urlencode($model->title)?>"
                        title="<?=Yii::t('app','Click to share on LinkedIn');?>">
                         <span></span>
                     </a>
@@ -74,7 +70,6 @@ Yii::$app->view->registerMetaTag(['property' => 'og:image','content' => Yii::$ap
                     
                     <time class="date"><?=Yii::$app->formatter->asDate($model->date_create)?></time>
                 </div>
-
                 <?=$model->text;?>
                 <?=$model->footnotes;?>
             </div>
@@ -88,8 +83,8 @@ Yii::$app->view->registerMetaTag(['property' => 'og:image','content' => Yii::$ap
                         </header>
                         <?php
                             echo $model->showExpert(1,$model->getAuthorLink(1));
-                            echo $model->showExpert(2,$model->getAuthorLink(2));
-                            echo $model->showExpert(3,$model->getAuthorLink(3));
+                            if($model->expert2_id) echo $model->showExpert(2,$model->getAuthorLink(2));
+                            if($model->expert3_id) echo $model->showExpert(3,$model->getAuthorLink(3));
                         ?>
                     </div>
                 <?php

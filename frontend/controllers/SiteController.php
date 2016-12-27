@@ -108,7 +108,7 @@ class SiteController extends Controller
                     ->all();
             }
             if($ctg=='all' || $ctg=='article'){
-                $article=$query->select(['id', 'title','text'])
+                $article=$query->select(['id', 'title','text','image'])
                     ->from('article')
                     ->where("title LIKE :search OR text LIKE :search", [':search' =>"%{$queryWord}%"])
                     ->all();
