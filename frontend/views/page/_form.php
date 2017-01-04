@@ -26,9 +26,9 @@ use iutbay\yii2kcfinder\KCFinder;
         'clientOptions'=>[
             'allowedContent'=>true,
             //'extraAllowedContent'=>'span(*);div(*)[*]{*};h2(*)',
-            'enterMode' => 2,
+            /*'enterMode' => 2,
             'forceEnterMode'=>false,
-            'shiftEnterMode'=>1,
+            'shiftEnterMode'=>1,*/
             'toolbar'=>[ //toolbar names can be found here: http://docs.cksource.com/CKEditor_3.x/Developers_Guide/Toolbar
                 ['name'=>'document','items'=>['Source']],
                 ['name'=>'basicstyles','items'=>['Bold','Italic','Underline','Strike','-','TextColor','BGColor','-','RemoveFormat']],

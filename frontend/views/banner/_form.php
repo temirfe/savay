@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Banner */
 /* @var $form yii\widgets\ActiveForm */
-$names=['article'=>Yii::t('app','Articles'),'event'=>Yii::t('app','Events')]
+$names=['article'=>Yii::t('app','Articles'),'event'=>Yii::t('app','Events')];
 ?>
 
 <div class="banner-form">

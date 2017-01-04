@@ -20,7 +20,7 @@ else {
     foreach ($words as $w) {
         $acronym .= mb_substr($w, 0, 1);
     }
-    $img="<div class='round initials_thumb'>".$acronym."</div>";
+    $img="<div class='round initials_thumb iblock'>".$acronym."</div>";
 }
 
 if($model->email){$email=Html::a("<span class='glyphicon glyphicon-envelope mr5'></span>Email","mailto:".$model->email,['class'=>'darklink']);}
