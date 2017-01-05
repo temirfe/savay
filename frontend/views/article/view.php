@@ -100,7 +100,7 @@ Yii::$app->view->registerMetaTag(['property' => 'og:url','content' => Yii::$app-
                         $files=scandir($dir);
                         foreach($files as $file){
                             if($file!='.' && $file!='..'){
-                                echo Html::a("<span class='glyphicon glyphicon-file mr5'></span>".$file,'/'.$dir."/".$file, ['class'=>'darklink']);
+                                echo Html::a("<span class='fa fa-file-text mr5'></span>".$file,'/'.$dir."/".$file, ['class'=>'darklink']);
                             }
                         }
                         ?>

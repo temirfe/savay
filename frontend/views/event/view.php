@@ -22,7 +22,7 @@ $date=$model->getDates();
 $start_date=$date['start'];
 $end_date=$date['end'];
 
-if($model->latlong) $map=Html::a("<span class='glyphicon glyphicon-map-marker mr5'></span>".Yii::t('app','Map'),$model->latlong,['target'=>'_blank','class'=>'darklink']);
+if($model->latlong) $map=Html::a("<span class='fa fa-map-marker mr5'></span>".Yii::t('app','Map'),$model->latlong,['target'=>'_blank','class'=>'darklink']);
 else $map='';
 
 $participants=Yii::$app->db->createCommand("SELECT expert_id FROM participant WHERE model_id='{$model->id}' AND model_name='event'")->queryAll();

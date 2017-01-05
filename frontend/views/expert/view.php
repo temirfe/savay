@@ -53,7 +53,7 @@ $articles=Yii::$app->db->createCommand("SELECT id, title FROM article WHERE expe
                     $files=scandir($dir);
                     foreach($files as $file){
                         if($file!='.' && $file!='..'){
-                            echo "<div class='mb10'>".Html::a("<span class='glyphicon glyphicon-file mr5'></span>".$file,'/'.$dir."/".$file, ['class'=>'darklink'])."</div>";
+                            echo "<div class='mb10'>".Html::a("<span class='fa fa-file-text mr5'></span>".$file,'/'.$dir."/".$file, ['class'=>'darklink'])."</div>";
                         }
                     }
                     ?>
