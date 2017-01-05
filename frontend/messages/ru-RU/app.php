@@ -85,6 +85,11 @@ return [
     'Create Category' => 'Добавить категорию',
     'Update Category: ' => 'Редактировать категорию',
 
+    'Video' => 'Видео',
+    'Videos' => 'Видео',
+    'Create Video' => 'Добавить видео',
+    'Update Video' => 'Редактировать видео',
+
     'Upcoming events' => 'Предстоящие мероприятия',
     'Upcoming event' => 'Предстоящее мероприятие',
     'Past events' => 'Прошедшие мероприятия',
