@@ -8,10 +8,12 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
+use frontend\assets\FontAwesomeAsset;
 use common\widgets\Alert;
 use yii\bootstrap\Modal;
 
 AppAsset::register($this);
+FontAwesomeAsset::register($this);
 $controller=Yii::$app->controller->id;
 $action=Yii::$app->controller->action->id;
 
@@ -68,6 +70,26 @@ if($controller=='site' && $action=="partners") $partner_active=true; else $partn
     //elseif(!$isGuest && $user_role=='Moderator'){include_once('_moderpanel.php');}
     //elseif(!$isGuest && $user_role=='ContentManager'){include_once('_cmanagerpanel.php');}
     ?>
+    <div class="statusbar pr30 pl15">
+        <div class="iblock">
+            <?php
+            echo Html::a("<span class='fa fa-bars fa-fixed-width mr5'></span>".Yii::t('app','Sections'), '#',
+                ['class'=>'search small_nav pr15 js_sections_toggle']);
+            ?>
+        </div>
+        <div class="pull-right">
+            <?php
+            echo Html::a(Yii::t('app','Search')."<span class='fa fa-search search_icon'></span>", ['/site/search'],
+                ['class'=>'search small_nav pr15','data-toggle'=>"modal", 'data-target'=>"#search-modal"]);
+            if (Yii::$app->user->isGuest) {
+                echo Html::a(Yii::t('app','Login')."<span class='fa fa-sign-in ml5'></span>",['/site/login'],['class'=>'small_nav mt1']);
+            } else {
+                echo Html::a(Yii::t('app','Logout').' (' . Yii::$app->user->identity->username.")<span class='fa fa-sign-out ml5'></span>",['/site/logout'],['class'=>'small_nav mt1', 'data-method'=>'post']);
+            }
+            ?>
+        </div>
+        <?=$this->render('/site/_sections');?>
+    </div>
     <?php
     NavBar::begin([
         'brandLabel' => "<div class='logo_wrap  logo_wrap_index js_logo_wrap'></div>",
@@ -85,21 +107,8 @@ if($controller=='site' && $action=="partners") $partner_active=true; else $partn
         ['label' => Yii::t('app','Experts'), 'url' => ['/expert/list'], 'active'=>$expert_active],
         ['label' => Yii::t('app','Our partners'), 'url' => ['/partners'],'active'=>$partner_active],
         ['label' => Yii::t('app','Contact'), 'url' => ['/site/contact']],
-        ['label' => Yii::t('app','Search')."<span class='glyphicon glyphicon-search search_icon'></span>", 'url' => ['/site/search'],'encode'=>false,
-            'linkOptions'=>['class'=>'search small_nav','data-toggle'=>"modal", 'data-target'=>"#search-modal"]],
     ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => Yii::t('app','Login')."<span class='glyphicon glyphicon-log-in ml5'></span>",'encode'=>false, 'url' => ['/site/login'], 'linkOptions'=>['class'=>'small_nav mt1']];
-    } else {
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
-            . Html::submitButton(
-                Yii::t('app','Logout').' (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout darklink mt1']
-            )
-            . Html::endForm()
-            . '</li>';
-    }
+
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => $menuItems,
@@ -133,7 +142,7 @@ if($controller=='site' && $action=="partners") $partner_active=true; else $partn
 
     </div>
 </footer>
-<a href="#" class="scrollToTop"><span class="glyphicon glyphicon-arrow-up"></span></a>
+<a href="#" class="scrollToTop"><span class="fa fa-arrow-up"></span></a>
 <?php $this->endBody() ?>
 <?php
 $modal = Modal::begin([

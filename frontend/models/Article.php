@@ -152,4 +152,20 @@ class Article extends MyModel
         else $msg=$this->category->title_en;
         return $msg;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+
+            $dao=Yii::$app->db;
+            $dao->createCommand()->update('depend', ['last_update' =>time()], 'table_name="article"')->execute();
+
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

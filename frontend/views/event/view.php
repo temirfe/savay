@@ -65,7 +65,7 @@ if($participants){
         </div>
         <aside class="col-md-4">
             <div class="aside-module box_gray">
-                <time class="mb10 iblock"><?=$start_date." - ".$end_date;?></time>
+                <time class="mb10 iblock"><?=$start_date.$end_date;?></time>
                 <div class="mb10"><?=$model->place;?></div>
                 <div class="ads"><?=$map;?></div>
             </div>

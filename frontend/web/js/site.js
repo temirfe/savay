@@ -80,3 +80,21 @@ $('.popup').click(function(event) {
 
     return false;
 });
+
+//video
+$('.js_vid_thumb').click(function(e){
+    e.preventDefault();
+    var id=$(this).attr('data-id');
+    console.log(id);
+    $('.js_vid').hide();
+    $('.js_vid[data-video="'+id+'"]').show();
+});
+
+//sections
+$('.js_sections_toggle').click(function(e){
+    e.preventDefault();
+    var fa=$(this).find('span');
+    var sec=$('.js_sections');
+    if(sec.hasClass('js_sec_open')){sec.removeClass('sections_visible js_sec_open'); fa.removeClass('fa-times').addClass('fa-bars');}
+    else {sec.addClass('sections_visible js_sec_open');fa.addClass('fa-times').removeClass('fa-bars');}
+});

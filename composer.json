@@ -24,7 +24,8 @@
         "2amigos/yii2-ckeditor-widget" : "2.0",
         "iutbay/yii2-kcfinder": "dev-master",
         "newerton/yii2-fancybox": "dev-master",
-        "kartik-v/yii2-widget-datetimepicker": "*"
+        "kartik-v/yii2-widget-datetimepicker": "*",
+        "FortAwesome/Font-Awesome": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

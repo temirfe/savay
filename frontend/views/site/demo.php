@@ -4,18 +4,20 @@
 use yii\helpers\Html;
 use frontend\models\Article;
 use frontend\models\Event;
+use frontend\models\Video;
 use yii\caching\DbDependency;
 //$this->title = 'Центр политико-правовых исследований';
 $this->title = Yii::t('app','CPLR | Center for political and legal research');
 $dao=Yii::$app->db;
 $banner=$dao->createCommand("SELECT * FROM banner ORDER BY id DESC LIMIT 1")->queryOne();
-$msg='';$subtitle='';
+$msg='';$subtitle='';$banner_article_id=0;
 if(isset($banner['model_name'])){
     if($banner['model_name']=='article'){
         $bmodel=Article::findOne($banner['model_id']);
         $msg=$bmodel->getLangTitle();
         $subtitle="<div class='white mt10 font12 subtitle'><div class='afterdot pull-left'>".$bmodel->getAuthors()."</div>
         <time class='date'>".Yii::$app->formatter->asDate($bmodel->date_create)."</time></div>";
+        $banner_article_id=$bmodel->id;
     }
     else if($banner['model_name']=='event'){
         $bmodel=Event::findOne($banner['model_id']);
@@ -27,24 +29,30 @@ if(isset($banner['model_name'])){
     }
 }
 $dep = new DbDependency();
-$dep->sql = 'SELECT MAX(id) FROM article';
-$article = $dao->cache(function ($dao) {
-    return Article::find()->where("image<>''")->orderBy('id DESC')->one();
-}, 600, $dep);
-if($article){
-    $articles = $dao->cache(function ($dao) use ($article) {
-        return Article::find()->select('id,title')->where("id<>{$article->id}")->orderBy('id DESC')->limit(10)->all();
-    }, 600, $dep);
-}
+$dep->sql = 'SELECT MAX(last_update) FROM depend WHERE table_name="article"';
+$main_article_id=0;
+$article = $dao->cache(function ($dao) use($banner_article_id) {
+    return Article::find()->where("image<>'' AND id<>{$banner_article_id}")->orderBy('id DESC')->one();
+}, 3600, $dep);
+if($article)$main_article_id=$article->id;
+$articles = $dao->cache(function ($dao) use ($main_article_id, $banner_article_id) {
+    return Article::find()->select('id,title')->where("id<>{$main_article_id} AND id<>{$banner_article_id}")->orderBy('id DESC')->limit(10)->all();
+}, 3600, $dep);
 
 //$events=Event::find()->where('date_end>NOW()')->orderBy('id DESC')->limit(5)->all();
 $events=Event::find()->orderBy('id DESC')->limit(5)->all();
+$videos=Video::find()->orderBy('id DESC')->limit(6)->all();
 ?>
 <?php
 if(!empty($bmodel)){
     ?>
     <div class="slider_wrap mt-20 mb40">
-        <div class="slider"><?=Html::img('/images/'.$banner['model_name'].'/'.$banner['model_id'].'/'.$bmodel->image)?></div>
+        <div class="slider">
+            <?php
+            $slider_img=Html::img('/images/'.$banner['model_name'].'/'.$banner['model_id'].'/'.$bmodel->image);
+            echo Html::a($slider_img,['/'.$banner['model_name'].'/view','id'=>$bmodel->id]);
+            ?>
+        </div>
         <div class="slider_title">
             <div class="text-uppercase bold white mb5 font12"><?=$msg?></div>
             <h1><?= Html::a($bmodel->title,['/'.$banner['model_name'].'/view','id'=>$bmodel->id],['class'=>'white hover_white']) ?></h1>
@@ -60,10 +68,10 @@ if(!empty($bmodel)){
     <div class="body-content">
         <div class="col-md-4 oh">
             <?php
-            if($events){
-                echo "<h3 class='emprint color3d font17 mb20'>".Yii::t('app','Events')."</h3>";
-                foreach($events as $event){
-                    echo "<div class='mb20'>".$this->render('/event/_list',['model' => $event])."</div>";
+            if(!empty($articles)){
+                echo "<h3 class='roboto mb15 navy font19 bbthinblue pb5'>".Yii::t('app','Materials')."</h3>";
+                foreach($articles as $art){
+                    echo Html::a("<span class='mr4 block pull-left'>—</span><span class='oh block'>".$art->title."</span>",['/article/view','id'=>$art->id],['class'=>'mb5 iblock color3 roboto no_underline w100']);
                 }
             }
             ?>
@@ -71,7 +79,7 @@ if(!empty($bmodel)){
         <div class="col-md-4 oh">
             <?php
             if($article){
-                echo "<h3 class='emprint mb20 color3d font17'>".$article->getLangTitle()."</h3>";
+                echo "<h3 class='roboto mb15 navy font19 bbthinblue pb5'>".$article->getLangTitle()."</h3>";
                 ?>
                 <div class='mb1'>
                     <?php
@@ -86,7 +94,11 @@ if(!empty($bmodel)){
                 <div class="oh">
                     <h3><?=Html::a($article->title,['/article/view','id'=>$article->id],['class'=>'black']); ?></h3>
                     <div class="color9 mt10 roboto font13">
-                        <div class='afterdot pull-left'><?=$article->getAuthors()?></div>
+                        <?php if($authors=$article->getAuthors()){
+                            ?>
+                            <div class='afterdot pull-left'><?=$authors?></div>
+                        <?php
+                        } ?>
                         <time class="date"><?=Yii::$app->formatter->asDate($article->date_create)?></time>
                     </div>
                 </div>
@@ -96,15 +108,49 @@ if(!empty($bmodel)){
         </div>
         <div class="col-md-4 oh">
             <?php
-            if(!empty($articles)){
-                echo "<h3 class='emprint mb15 color3d font17'>".Yii::t('app','Articles')."</h3>";
-                foreach($articles as $article){
-                    echo Html::a("<span class='mr4 block pull-left'>—</span><span class='oh block'>".$article->title."</span>",['/article/view','id'=>$article->id],['class'=>'mb5 iblock color3 roboto no_underline w100']);
+            if($events){
+                echo "<h3 class='roboto mb15 navy font19 bbthinblue mb20 pb5'>".Yii::t('app','Events')."</h3>";
+                foreach($events as $event){
+                    echo "<div class='mb20'>".$this->render('/event/_list',['model' => $event])."</div>";
                 }
             }
             ?>
         </div>
 
+        <div class="clear"></div>
+        <br />
+        <div class="mt20 large-container">
+            <h3 class="roboto mb15 navy font19 bbthinblue pb5"><?=Yii::t('app','Media')?></h3>
+            <div class="row">
+                <div class="col-md-9">
+                    <?php
+                    $v=0; $vdisplay='';
+                    foreach($videos as $video){
+                        $src="https://www.youtube.com/embed/{$video->video_id}";
+                        if($v>0) $vdisplay='hiddeniraak';
+                        ?>
+                        <div class="video <?=$vdisplay?> js_vid" data-video="<?=$video->video_id?>">
+                            <iframe id="vid-<?=$video->video_id?>" src="<?=$src ?>" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        <?php
+                        $v++;
+                    }
+                    ?>
+                </div>
+                <div class="col-md-3 pl5">
+                    <div class="vid_thumbs">
+                        <?php
+                        foreach($videos as $video){
+                            $vimg=Html::img($video->thumb,['class'=>'img-responsive']);
+                            echo "<div class='mb20 rel pr5'>"
+                                .Html::a($vimg.$video->title,['/video/view','id'=>$video->id],['class'=>'js_vid_thumb', 'data-id'=>$video->video_id])
+                                ."<span class='abs tube iblock'></span></span></div>";
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
     </div>

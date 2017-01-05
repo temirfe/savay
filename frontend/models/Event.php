@@ -92,25 +92,54 @@ class Event extends MyModel
         $start=strtotime($this->date_start);
         $end=strtotime($this->date_end);
         $register=false;
-        if($end<$time) {$msg=Yii::t('app','Past event');}
-        else if($start<$time) {$msg=Yii::t('app','Going');}
-        else {$msg=Yii::t('app','Upcoming event'); $register=true;}
+        if($end){
+            if($end<$time) {$msg=Yii::t('app','Past event');}
+            else if($start<$time) {$msg=Yii::t('app','Going');}
+            else {$msg=Yii::t('app','Upcoming event'); $register=true;}
+        }
+        else{
+            if($start<$time) {$msg=Yii::t('app','Past event');}
+            else {$msg=Yii::t('app','Upcoming event'); $register=true;}
+        }
         return array('msg'=>$msg, 'register'=>$register);
     }
     
     public function getDates(){
         $start=strtotime($this->date_start);
-        $end=strtotime($this->date_end);
-
-        if(date('d-m', $start)==date('d-m', $end)){
+        if($this->date_end){
+            $end=strtotime($this->date_end);
+            if(date('d-m', $start)==date('d-m', $end)){
+                $start_date= Yii::$app->formatter->asDatetime($start,'EEEE, d MMMM, y H:mm');
+                $end_date= " - ".Yii::$app->formatter->asTime($end,'H:mm');
+            }
+            else {
+                $start_date= Yii::$app->formatter->asDatetime($start,'d MMMM H:mm');
+                $end_date= " - ".Yii::$app->formatter->asDatetime($end,'H:mm d MMMM, y');
+            }
+        }
+        else{
             $start_date= Yii::$app->formatter->asDatetime($start,'EEEE, d MMMM, y H:mm');
-            $end_date= Yii::$app->formatter->asTime($end,'H:mm');
+            $end_date='';
         }
-        else {
-            $start_date= Yii::$app->formatter->asDatetime($start,'d MMMM H:mm');
-            $end_date= Yii::$app->formatter->asDatetime($end,'H:mm d MMMM, y');
-        }
+
+
         
         return ['start'=>$start_date, 'end'=>$end_date];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+
+            $dao=Yii::$app->db;
+            $dao->createCommand()->update('depend', ['last_update' =>time()], 'table_name="event"')->execute();
+
+            return true;
+        } else {
+            return false;
+        }
     }
 }
