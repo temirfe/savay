@@ -128,13 +128,16 @@ if($controller=='site' && $action=="partners") $partner_active=true; else $partn
             <?=Yii::t('app','Follow us on ')?>
         </div>
         <div class="text-left">
-            <a class="share-facebook share-icon" rel="nofollow" href="#" title="<?=Yii::t('app','Facebook');?>">
+            <a class="share-facebook share-icon" rel="nofollow" href="https://www.facebook.com/%D0%A6%D0%B5%D0%BD%D1%82%D1%80-%D0%BF%D0%BE%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%BE-%D0%BF%D1%80%D0%B0%D0%B2%D0%BE%D0%B2%D1%8B%D1%85-%D0%B8%D1%81%D1%81%D0%BB%D0%B5%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B9-232160823883163/" title="<?=Yii::t('app','Facebook');?>">
                 <span></span>
             </a>
-            <a class="share-twitter share-icon" rel="nofollow" href="#" title="<?=Yii::t('app','Twitter');?>">
+            <a class="share-twitter share-icon" rel="nofollow" href="https://twitter.com/Centerkg2" title="<?=Yii::t('app','Twitter');?>">
                 <span></span>
             </a>
             <a class="share-linkedin share-icon" rel="nofollow" href="#" title="<?=Yii::t('app','LinkedIn');?>">
+                <span></span>
+            </a>
+            <a class="share-youtube share-icon" rel="nofollow" href="https://www.youtube.com/channel/UCriqO1LQc7Xry8aw5CzUlyw" title="<?=Yii::t('app','YouTube');?>">
                 <span></span>
             </a>
         </div>

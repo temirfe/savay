@@ -638,6 +638,9 @@ a.hover_white:hover{color:#fff;}
 .share-twitter span{background-image: url("twitter.svg");}
 .share-linkedin span{background-image: url("linkedin.svg");}
 .share-email span{background-image: url("envelope.svg");}
+.share-youtube span{background-image: url("youtube.svg");
+    background-position: -1px -2px;
+    background-size: 32px 33px !important;}
 .share-icon span{
     display: inline-block;
     height: 30px;
@@ -756,3 +759,19 @@ a.hover_white:hover{color:#fff;}
 }
 .own_title{  line-height: 18px;}
 .own_thumb{width:120px;}
+.help-block {margin-bottom: 0;}
+.avatar{width:50px;}
+.avatar-col{ margin-top: 5px;}
+.comment-wrap{clear:both;}
+.comment-col{ margin-top: 2px;}
+.comment-name{font-weight: bold;}
+.comment-date{color: #777;
+    display: inline-block;
+    font-size: 12px;
+    line-height: 21px;
+    margin-left: 15px;}
+.comment-row{border-top: 1px solid #eaeaea;
+    margin: 15px 0 23px;
+    overflow: hidden;
+    padding-top: 10px;}
+.comment-row .avatar-col{ margin-right: 14px;}

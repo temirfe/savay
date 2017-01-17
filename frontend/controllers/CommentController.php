@@ -3,49 +3,39 @@
 namespace frontend\controllers;
 
 use Yii;
-use frontend\models\Article;
-use frontend\models\ArticleSearch;
+use frontend\models\Comment;
+use frontend\models\CommentSearch;
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\data\ActiveDataProvider;
+use yii\filters\VerbFilter;
 
 /**
- * ArticleController implements the CRUD actions for Article model.
+ * CommentController implements the CRUD actions for Comment model.
  */
-class ArticleController extends MyController
+class CommentController extends Controller
 {
-
-    public function actionList()
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
     {
-        /*if(Yii::$app->language=='ru')
-        {
-            $content_lang='1';
-        }
-        else{
-            $content_lang='0';
-        }*/
-        $ctg=Yii::$app->request->get('category');
-        if($ctg){$query=Article::find()->where(['category_id'=>$ctg]);}
-        else{$query=Article::find();}
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                'pageSize' => 20,
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
             ],
-            'sort'=> ['defaultOrder' => ['id'=>SORT_DESC]]
-        ]);
-
-        return $this->render('list', [
-            'dataProvider' => $dataProvider,
-        ]);
+        ];
     }
 
     /**
-     * Lists all Article models.
+     * Lists all Comment models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ArticleSearch();
+        $searchModel = new CommentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -55,30 +45,28 @@ class ArticleController extends MyController
     }
 
     /**
-     * Displays a single Article model.
+     * Displays a single Comment model.
      * @param integer $id
      * @return mixed
      */
     public function actionView($id)
     {
-        $model=$this->findModel($id);
-        $model->updateCounters(['views'=>1]);
         return $this->render('view', [
-            'model' => $model,
+            'model' => $this->findModel($id),
         ]);
     }
 
     /**
-     * Creates a new Article model.
+     * Creates a new Comment model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Article();
+        $model = new Comment();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect([$model->model_name.'/view', 'id' => $model->model_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -87,7 +75,7 @@ class ArticleController extends MyController
     }
 
     /**
-     * Updates an existing Article model.
+     * Updates an existing Comment model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -106,7 +94,7 @@ class ArticleController extends MyController
     }
 
     /**
-     * Deletes an existing Article model.
+     * Deletes an existing Comment model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -119,15 +107,15 @@ class ArticleController extends MyController
     }
 
     /**
-     * Finds the Article model based on its primary key value.
+     * Finds the Comment model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Article the loaded model
+     * @return Comment the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Article::findOne($id)) !== null) {
+        if (($model = Comment::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

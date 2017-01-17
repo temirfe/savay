@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use frontend\models\Comment;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Article */
@@ -72,6 +74,52 @@ Yii::$app->view->registerMetaTag(['property' => 'og:url','content' => Yii::$app-
                 </div>
                 <?=$model->text;?>
                 <?=$model->footnotes;?>
+                <div class="views" title="<?=Yii::t('app','Views')?>"><i class="fa fa-eye mr5 gray5"></i><?=$model->views?></div>
+
+                <div class="comment-wrap mt20 oh">
+                    <h3 class="roboto mb15 navy font19 bbthinblue pb5"><?=Yii::t('app', 'Comments');?></h3>
+                    <div class="news-comments">
+                        <?php foreach($model->comments as $comment){
+                            //if($comment['public'])
+                            if(true)
+                            {
+                                ?>
+                                <div class="comment-row">
+                                    <div class="comment-col">
+                                        <div class="comment-name pull-left"><?=$comment['name'];?></div>
+                                        <div class="comment-date"><?=date('m.d.Y, H:i',strtotime($comment['date']));?></div>
+                                        <div class="comment-content"><?=$comment['content'];?></div>
+                                    </div>
+                                </div>
+                                <?php
+                            }
+                        }?>
+                    </div>
+                    <hr />
+                    <div class="comment-form">
+                        
+                        <?php
+                        echo Yii::t('app','Your comment:');
+                        $cmodel=new Comment; $form = ActiveForm::begin([
+                            'action'=>['comment/create'],
+                        ]); ?>
+                        <?= $form->field($cmodel, 'content')->textArea(['maxlength' => true, 'rows'=>6])->label('') ?>
+                        <div class="row">
+                            <div class="col-sm-4"><?= $form->field($cmodel, 'name')->textInput(['maxlength' => true,'placeholder'=>Yii::t('app', 'Your name')])->label('') ?></div>
+                            <div class="col-sm-4"><?= $form->field($cmodel, 'check')->textInput(['placeholder'=>"3+6="])->label('') ?></div>
+                        </div>
+
+                        <?=Html::activeHiddenInput($cmodel,'model_name',['value'=>'article'])?>
+                        <?=Html::activeHiddenInput($cmodel,'model_id',['value'=>$model->id])?>
+
+                        <div class="form-group">
+                            <?= Html::submitButton( Yii::t('app', 'Add comment'), ['class' => 'btn btn-primary']) ?>
+                        </div>
+
+                        <?php ActiveForm::end(); ?>
+
+                    </div>
+                </div>
             </div>
             <aside class="col-md-4">
                 <?php

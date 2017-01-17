@@ -94,6 +94,12 @@ return [
     'Create Video' => 'Добавить видео',
     'Update Video' => 'Редактировать видео',
 
+
+    'Comment' => 'Комментарий',
+    'Comments' => 'Комментарии',
+    'Create Comment' => 'Добавить Комментарий',
+    'Update Comment' => 'Редактировать Комментарий',
+
     'Upcoming events' => 'Предстоящие мероприятия',
     'Upcoming event' => 'Предстоящее мероприятие',
     'Past events' => 'Прошедшие мероприятия',
@@ -110,7 +116,6 @@ return [
     'Delete' => 'Удалить',
     'Add item' => 'Добавить',
     'Pages' => 'Страницы',
-    'Users' => 'Пользователи',
     'Articles' => 'Статьи',
     'Home banner' => 'Баннер на главной',
     'Author' => 'Автор',
@@ -140,5 +145,9 @@ return [
     'Own article' => 'Наша статья',
     'Interesting materials' => 'Интересные материалы',
     'Center Articles' => 'Статьи центра',
+    'Add comment' => 'Добавить',
+    'Your name' => 'Ваше имя',
+    'Your comment:' => 'Написать комментарий:',
+    'Views' => 'Просмотры',
     '' => '',
 ];

@@ -17,6 +17,9 @@ use yii\helpers\Html;
  * @property string $date_create
  * @property string $footnotes
  * @property integer $own
+ * @property integer $views
+ * 
+ * @property Comment $comments
  */
 class Article extends MyModel
 {
@@ -36,7 +39,7 @@ class Article extends MyModel
         $rules=[
             [['title'], 'required'],
             [['text'], 'string'],
-            [['category_id', 'expert_id', 'expert2_id', 'expert3_id','own'], 'integer'],
+            [['category_id', 'expert_id', 'expert2_id', 'expert3_id','own','views'], 'integer'],
             [['date_create'], 'safe'],
             [['title'], 'string', 'max' => 500],
             [['image'], 'string', 'max' => 200],
@@ -169,5 +172,10 @@ class Article extends MyModel
         } else {
             return false;
         }
+    }
+
+    public function getComments()
+    {
+        return $this->hasMany(Comment::className(), ['model_id' => 'id']);
     }
 }
