@@ -18,7 +18,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
     <br />
-
-    <?=$model->text ?>
+    <div class="col-md-10">
+        <?=$model->text ?>
+    </div>
 
 </div>

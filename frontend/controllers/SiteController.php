@@ -336,7 +336,7 @@ class SiteController extends Controller
         if(is_dir($dir=$webroot."/files/{$model_name}/".$id))
         {
             if(is_file($dir.'/'.$key)){
-                @unlink($dir.'/'.$key);
+                unlink($dir.'/'.$key);
             }
         }
         Yii::$app->response->format=\yii\web\Response::FORMAT_JSON;

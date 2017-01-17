@@ -715,3 +715,42 @@ a.hover_white:hover{color:#fff;}
 .sections div div{margin-bottom:13px;}
 .sections span{display:block; margin-bottom: 5px; line-height:20px;}
 .sections a{color: #285473;}
+.glyphicon{display: inline-block;
+    font-family: FontAwesome;
+    font-feature-settings: normal;
+    font-kerning: auto;
+    font-language-override: normal;
+    font-size: inherit;
+    font-size-adjust: none;
+    font-stretch: normal;
+    font-style: normal;
+    font-synthesis: weight style;
+    font-variant: normal;
+    font-weight: normal;
+    line-height: 1;
+    text-rendering: auto;}
+.glyphicon-eye-open::before {
+    content: "";
+}
+.glyphicon-zoom-in::before {
+    content: "";
+}
+.glyphicon-remove::before {
+    content: "";
+}
+.glyphicon-pencil::before {
+    content: "";
+}
+.glyphicon-arrow-left::before {
+    content: "";
+}
+.glyphicon-arrow-right::before {
+    content: "";
+}
+.glyphicon-calendar::before {
+    content: "";
+}
+.glyphicon-trash{}
+.glyphicon-trash::before {
+    content: "";
+}
