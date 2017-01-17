@@ -16,6 +16,7 @@ use yii\helpers\Html;
  * @property integer $expert_id
  * @property string $date_create
  * @property string $footnotes
+ * @property integer $own
  */
 class Article extends MyModel
 {
@@ -35,12 +36,12 @@ class Article extends MyModel
         $rules=[
             [['title'], 'required'],
             [['text'], 'string'],
-            [['category_id', 'expert_id', 'expert2_id', 'expert3_id'], 'integer'],
+            [['category_id', 'expert_id', 'expert2_id', 'expert3_id','own'], 'integer'],
             [['date_create'], 'safe'],
             [['title'], 'string', 'max' => 500],
             [['image'], 'string', 'max' => 200],
             [['footnotes'], 'string', 'max' => 1000],
-            [['category_id', 'expert_id', 'expert2_id', 'expert3_id'],'default','value'=>0]
+            [['category_id', 'expert_id', 'expert2_id', 'expert3_id','own'],'default','value'=>0]
         ];
 
         return ArrayHelper::merge(parent::rules(),$rules);
@@ -62,6 +63,7 @@ class Article extends MyModel
             'expert3_id' => Yii::t('app', 'Author 3'),
             'date_create' => Yii::t('app', 'Date Create'),
             'footnotes' => Yii::t('app', 'Footnotes'),
+            'own' => Yii::t('app', 'Own article'),
         ];
 
         return ArrayHelper::merge(parent::attributeLabels(),$rules);

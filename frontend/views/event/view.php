@@ -32,7 +32,7 @@ if($participants){
         $part_ids[]=$p['expert_id'];
     }
     $pids=implode(',',$part_ids);
-    $panelists=Yii::$app->db->createCommand("SELECT * FROM expert WHERE id IN ({$model->id})")->queryAll();
+    $panelists=Yii::$app->db->createCommand("SELECT * FROM expert WHERE id IN ({$pids})")->queryAll();
 }
 ?>
 <?php

@@ -30,13 +30,12 @@ if(isset($banner['model_name'])){
 }
 $dep = new DbDependency();
 $dep->sql = 'SELECT MAX(last_update) FROM depend WHERE table_name="article"';
-$main_article_id=0;
-$article = $dao->cache(function ($dao) use($banner_article_id) {
-    return Article::find()->where("image<>'' AND id<>{$banner_article_id}")->orderBy('id DESC')->one();
+
+$owns = $dao->cache(function ($dao) use($banner_article_id) {
+    return Article::find()->where("own=1 AND id<>{$banner_article_id}")->orderBy('id DESC')->all();
 }, 3600, $dep);
-if($article)$main_article_id=$article->id;
-$articles = $dao->cache(function ($dao) use ($main_article_id, $banner_article_id) {
-    return Article::find()->select('id,title')->where("id<>{$main_article_id} AND id<>{$banner_article_id}")->orderBy('id DESC')->limit(10)->all();
+$articles = $dao->cache(function ($dao) {
+    return Article::find()->select('id,title')->where("own=0")->orderBy('id DESC')->limit(10)->all();
 }, 3600, $dep);
 
 //$events=Event::find()->where('date_end>NOW()')->orderBy('id DESC')->limit(5)->all();
@@ -69,7 +68,7 @@ if(!empty($bmodel)){
         <div class="col-md-4 oh">
             <?php
             if(!empty($articles)){
-                echo "<h3 class='roboto mb15 navy font19 bbthinblue pb5'>".Yii::t('app','Materials')."</h3>";
+                echo "<h3 class='roboto mb15 navy font19 bbthinblue pb5'>".Yii::t('app','Interesting materials')."</h3>";
                 foreach($articles as $art){
                     echo Html::a("<span class='mr4 block pull-left'>—</span><span class='oh block'>".$art->title."</span>",['/article/view','id'=>$art->id],['class'=>'mb5 iblock color3 roboto no_underline w100']);
                 }
@@ -78,31 +77,35 @@ if(!empty($bmodel)){
         </div>
         <div class="col-md-4 oh">
             <?php
-            if($article){
-                echo "<h3 class='roboto mb15 navy font19 bbthinblue pb5'>".$article->getLangTitle()."</h3>";
-                ?>
-                <div class='mb1'>
-                    <?php
-                    if($article->image){
-                        $img=Html::img("/images/article/".$article->id."/s_".$article->image,['class'=>'img-responsive']);
-                        echo Html::a($img,['/article/view','id'=>$article->id],['class'=>'img-responsive rel js_des_list_img']);
-
-                    }
+            if($owns){
+                echo "<h3 class='roboto mb15 navy font19 bbthinblue pb5'>".Yii::t('app','Center Articles')."</h3>";
+                foreach ($owns as $article){
                     ?>
-                </div>
+                    <div class="oh mb20">
+                        <div class='own_thumb pull-left mr10'>
+                            <?php
+                            if($article->image){
+                                $img=Html::img("/images/article/".$article->id."/s_".$article->image,['class'=>'img-responsive']);
+                                echo Html::a($img,['/article/view','id'=>$article->id],['class'=>'img-responsive rel js_des_list_img']);
 
-                <div class="oh">
-                    <h3><?=Html::a($article->title,['/article/view','id'=>$article->id],['class'=>'black']); ?></h3>
-                    <div class="color9 mt10 roboto font13">
-                        <?php if($authors=$article->getAuthors()){
+                            }
                             ?>
-                            <div class='afterdot pull-left'><?=$authors?></div>
-                        <?php
-                        } ?>
-                        <time class="date"><?=Yii::$app->formatter->asDate($article->date_create)?></time>
+                        </div>
+
+                        <div class="oh">
+                            <?=Html::a($article->title,['/article/view','id'=>$article->id],['class'=>'black own_title roboto font16']); ?>
+                            <div class="color9 mt5 roboto font13">
+                                <?php if($authors=$article->getAuthors()){
+                                    ?>
+                                    <div class='afterdot pull-left'><?=$authors?></div>
+                                    <?php
+                                } ?>
+                                <time class="date"><?=Yii::$app->formatter->asDate($article->date_create)?></time>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            <?php
+                    <?php
+                }
             }
             ?>
         </div>
@@ -111,7 +114,7 @@ if(!empty($bmodel)){
             if($events){
                 echo "<h3 class='roboto mb15 navy font19 bbthinblue mb20 pb5'>".Yii::t('app','Events')."</h3>";
                 foreach($events as $event){
-                    echo "<div class='mb20'>".$this->render('/event/_list',['model' => $event])."</div>";
+                    echo "<div class='mb20 oh'>".$this->render('/event/_list',['model' => $event])."</div>";
                 }
             }
             ?>

@@ -74,6 +74,7 @@ $experts=ArrayHelper::map($experts,'id','title');
 
     <div class="row">
         <div class="col-md-4"><?= $form->field($model, 'category_id')->dropDownList($categories,['prompt'=>Yii::t('app','Select').".."]) ?></div>
+        <div class="col-sm-2 mt20 pt10"><?= $form->field($model, 'own')->checkbox(); ?></div>
     </div>
 
     <div class="row">

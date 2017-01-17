@@ -137,5 +137,8 @@ return [
     'Save' => 'Сохранить',
     'Media' => 'Медиа',
     'Sections' => 'Темы',
+    'Own article' => 'Наша статья',
+    'Interesting materials' => 'Интересные материалы',
+    'Center Articles' => 'Статьи центра',
     '' => '',
 ];

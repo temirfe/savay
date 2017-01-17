@@ -754,3 +754,5 @@ a.hover_white:hover{color:#fff;}
 .glyphicon-trash::before {
     content: "";
 }
+.own_title{  line-height: 18px;}
+.own_thumb{width:120px;}
