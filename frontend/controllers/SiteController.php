@@ -83,15 +83,15 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $this->layout='//empty';
         return $this->render('index');
     }
 
     public function actionDemo()
     {
-        return $this->render('demo');
+        $this->layout='//empty';
+        return $this->render('under_construction');
     }
-
+    
     public function actionSearch()
     {
         $page='';

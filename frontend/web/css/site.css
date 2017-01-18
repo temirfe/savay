@@ -753,6 +753,9 @@ a.hover_white:hover{color:#fff;}
 .glyphicon-calendar::before {
     content: "";
 }
+.glyphicon-search ::before {
+    content: "\f002";
+}
 .glyphicon-trash{}
 .glyphicon-trash::before {
     content: "";

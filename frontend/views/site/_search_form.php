@@ -18,7 +18,7 @@ $categories=['all'=>Yii::t('app','Search everywhere'),'article'=>Yii::t('app','A
         </div>
         <div class="col-md-8 rel">
             <?= Html::input('text', 'search', $queryWord, ['class' => 'form-control search_input','minlength'=>3,'placeholder'=>Yii::t('app','Search')]) ?>
-            <?= Html::button("<span class='searchicon glyphicon glyphicon-search '></span>", ['class' => 'btn btn-primary abs search_btn', 'type'=>'submit', 'style'=>'top:0;right:0;']) ?>
+            <?= Html::button("<span class='searchicon fa fa-search'></span>", ['class' => 'btn btn-primary abs search_btn', 'type'=>'submit', 'style'=>'top:0;right:0;']) ?>
         </div>
 
     </div>
