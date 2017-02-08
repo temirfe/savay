@@ -26,13 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'url',
             'title',
-            [
+            /*[
                 'attribute'=>'text',
                 'format'=>'raw',
                 'value'=>function($model){
                     return StringHelper::truncate($model->text,150,'...');
                 }
-            ],
+            ],*/
             // 'category',
 
             ['class' => 'yii\grid\ActionColumn', 'contentOptions'=>['width'=>80]],

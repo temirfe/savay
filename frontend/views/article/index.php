@@ -38,9 +38,9 @@ $ctg=ArrayHelper::map($rows,'id','title');
             [
                 'attribute' => 'category_id',
                 'format' => 'raw',
-                'value' => function($model) use($ctg) {
+                /*'value' => function($model) use($ctg) {
                     return $ctg[$model->category_id];
-                },
+                },*/
                 'filter' => Html::activeDropDownList($searchModel, 'category_id', $ctg,['class'=>'form-control','prompt' => Yii::t('app','All')]),
                 'contentOptions'=>['width'=>180]
             ],

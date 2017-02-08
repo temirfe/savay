@@ -29,9 +29,9 @@ $events=ArrayHelper::map($rows,'id','title');
             [
                 'attribute' => 'event_id',
                 'format' => 'raw',
-                'value' => function($model) use($events) {
+                /*'value' => function($model) use($events) {
                     return $events[$model->event_id];
-                },
+                },*/
                 'filter' => Html::activeDropDownList($searchModel, 'event_id', $events,['class'=>'form-control','prompt' => 'All']),
                 'contentOptions'=>['width'=>250]
             ],
