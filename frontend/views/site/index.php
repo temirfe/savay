@@ -7,7 +7,7 @@ use frontend\models\Event;
 use frontend\models\Video;
 use yii\caching\DbDependency;
 //$this->title = 'Центр политико-правовых исследований';
-$this->title = Yii::t('app','CPLR | Center for political and legal research');
+$this->title = "Savay Travel";
 $dao=Yii::$app->db;
 $banner=$dao->createCommand("SELECT * FROM banner ORDER BY id DESC LIMIT 1")->queryOne();
 $msg='';$subtitle='';$banner_article_id=0;
