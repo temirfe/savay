@@ -269,7 +269,7 @@ a.red:hover{color:#e9465b;}
     outline: none;
 }
 .nav_wrap{
-    padding: 1.25em 0.9375em 0;
+    padding: 0.5em 0.9375em 0;
 }
 .mynavbar{
     background-color: #fff;
@@ -280,7 +280,6 @@ a.red:hover{color:#e9465b;}
     z-index: 2;
 }
 .navbar-brand {
-    height: 73px;
 }
 
 a.navbar-brand {
@@ -337,12 +336,9 @@ div.navbar-header{}
     color:#2d86e0;
 }
 .logo_wrap {
-    /*background: #fff url("/images/logo.png") no-repeat scroll center center / 163px auto;
+    background: #fff url("/images/savay_logo.png") no-repeat scroll 0 center / 100px auto;
     height: 50px;
-    width: 163px;*/
-    background: #fff url("/images/savay_logo.png") no-repeat scroll center center / 100px auto;
-    height: 50px;
-    width: 100px;
+    width: 225px;
 }
 .img_title{
     bottom: 0;
@@ -678,7 +674,7 @@ a.hover_white:hover{color:#fff;}
 .vid_thumbs{
     height:526px; overflow-y:auto;
 }
-.item{ border-bottom: 1px solid #f9f9f9;
+.something .item{ border-bottom: 1px solid #f9f9f9;
     margin-bottom: 20px;
     overflow: hidden;
     padding-bottom: 20px;}
@@ -778,3 +774,8 @@ a.hover_white:hover{color:#fff;}
     overflow: hidden;
     padding-top: 10px;}
 .comment-row .avatar-col{ margin-right: 14px;}
+.carousel-inner img{
+    width:100%;
+    min-height: 450px;
+    max-height: 450px;
+}

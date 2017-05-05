@@ -13,6 +13,7 @@ use yii\helpers\ArrayHelper;
  * @property string $title
  * @property string $text
  * @property string $image
+ * @property string $lang
  * @property integer $category
  */
 class Page extends MyModel
@@ -32,7 +33,7 @@ class Page extends MyModel
     {
         $rules= [
             [['title'], 'required'],
-            [['text'], 'string'],
+            [['text','lang'], 'string'],
             [['category'], 'integer'],
             [['url', 'title'], 'string', 'max' => 20],
             [['image'], 'string', 'max' => 200],
@@ -52,6 +53,7 @@ class Page extends MyModel
             'title' => Yii::t('app', 'Title'),
             'text' => Yii::t('app', 'Text'),
             'image' => Yii::t('app', 'Image'),
+            'lang' => Yii::t('app', 'Language'),
             'category' => Yii::t('app', 'Category'),
         ];
     }

@@ -17,7 +17,11 @@ use iutbay\yii2kcfinder\KCFinder;
     <?php $form = ActiveForm::begin(); ?>
     <?= $form->errorSummary($model); ?>
 
-    <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
+    <?php echo $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
+
+    <div class="row">
+        <div class="col-md-4"><?= $form->field($model, 'lang')->dropDownList(['ru'=>'Русский','ky'=>'Кыргызча', 'en'=>'English', 'tr'=>'Türkçe']) ?></div>
+    </div>
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'text')->widget(CKEditor::className(), [

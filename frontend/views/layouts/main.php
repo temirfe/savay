@@ -26,9 +26,6 @@ if(!isset($user_role) && $identity) $user_role=$identity->role; else $user_role=
 if(!isset($dao)) $dao=Yii::$app->db;
 
 if($controller=='site' && $action=="about") $about_active=true; else $about_active=false;
-if($controller=='expert') $expert_active=true; else $expert_active=false;
-if($controller=='article') $article_active=true; else $article_active=false;
-if($controller=='event') $event_active=true; else $event_active=false;
 if($controller=='site' && $action=="partners") $partner_active=true; else $partner_active=false;
 ?>
 <?php $this->beginPage() ?>
@@ -70,13 +67,69 @@ if($controller=='site' && $action=="partners") $partner_active=true; else $partn
     //elseif(!$isGuest && $user_role=='Moderator'){include_once('_moderpanel.php');}
     //elseif(!$isGuest && $user_role=='ContentManager'){include_once('_cmanagerpanel.php');}
     ?>
-    <div class="statusbar pr30 pl15">
-        <div class="iblock">
-            <?php
-            echo Html::a("<span class='fa fa-bars fa-fixed-width mr5'></span>".Yii::t('app','Sections'), '#',
-                ['class'=>'search small_nav pr15 js_sections_toggle']);
-            ?>
-        </div>
+    <?php
+    NavBar::begin([
+        'brandLabel' => "<div class='logo_wrap  logo_wrap_index js_logo_wrap'></div>",
+        'brandUrl' => Yii::$app->homeUrl,
+        'options' => [
+            'class' => 'mynavbar navbar',
+        ],
+        'innerContainerOptions'=>['class'=>'nav_wrap container']
+    ]);
+    $menuItems = [
+        ['label' => Yii::t('app','Home'), 'url' => ['/site/index']],
+        ['label' => Yii::t('app','About us'), 'url' => ['/about'], 'active'=>$about_active],
+        ['label' => Yii::t('app','Our partners'), 'url' => ['/partners'],'active'=>$partner_active],
+        ['label' => Yii::t('app','Contact'), 'url' => ['/site/contact']],
+    ];
+    $langPrefs = [
+        ['label' => Yii::t('app','RU'), 'url' => ['#']],
+        ['label' => Yii::t('app','KG'), 'url' => ['#'], 'active'=>$about_active],
+        ['label' => Yii::t('app','EN'), 'url' => ['#'],'active'=>$partner_active],
+        ['label' => Yii::t('app','TR'), 'url' => ['#']],
+    ];
+
+    echo Nav::widget([
+        'options' => ['class' => 'navbar-nav'],
+        'items' => $menuItems,
+    ]);
+
+    echo "<div class='pull-right mt15'>";
+        echo Html::a('Рус','#',['class'=>'gray5 ml10','data'=>['method' => 'post', 'params'=>['language'=>'ru-RU']]]);
+        echo Html::a('Кыр','#',['class'=>'gray5 ml10','data'=>['method' => 'post', 'params'=>['language'=>'ky-KG']]]);
+        echo Html::a('Eng','#',['class'=>'gray5 ml10','data'=>['method' => 'post', 'params'=>['language'=>'en-EN']]]);
+        echo Html::a('Tür','#',['class'=>'gray5 ml10','data'=>['method' => 'post', 'params'=>['language'=>'tr-TR']]]);
+    echo "</div>";
+
+
+    NavBar::end();
+    ?>
+    <?php /*echo Breadcrumbs::widget([
+        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+    ])*/ ?>
+    <?= Alert::widget() ?>
+    <?= $content ?>
+</div>
+
+<footer class="footer">
+    <div class="container pb10">
+        <!--<div class="pull-left mr10 mt5">
+            <?/*=Yii::t('app','Follow us on ')*/?>
+        </div>-->
+        <!--<div class="text-left">
+            <a class="share-facebook share-icon" rel="nofollow" href="https://www.facebook.com/" title="<?/*=Yii::t('app','Facebook');*/?>">
+                <span></span>
+            </a>
+            <a class="share-twitter share-icon" rel="nofollow" href="https://twitter.com/" title="<?/*=Yii::t('app','Twitter');*/?>">
+                <span></span>
+            </a>
+            <a class="share-linkedin share-icon" rel="nofollow" href="#" title="<?/*=Yii::t('app','LinkedIn');*/?>">
+                <span></span>
+            </a>
+            <a class="share-youtube share-icon" rel="nofollow" href="https://www.youtube.com/channel/" title="<?/*=Yii::t('app','YouTube');*/?>">
+                <span></span>
+            </a>
+        </div>-->
         <div class="pull-right">
             <?php
             echo Html::a(Yii::t('app','Search')."<span class='fa fa-search search_icon'></span>", ['/site/search'],
@@ -88,61 +141,7 @@ if($controller=='site' && $action=="partners") $partner_active=true; else $partn
             }
             ?>
         </div>
-        <?=$this->render('/site/_sections');?>
-    </div>
-    <?php
-    NavBar::begin([
-        'brandLabel' => "<div class='logo_wrap  logo_wrap_index js_logo_wrap'></div>",
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'mynavbar navbar',
-        ],
-        'innerContainerOptions'=>['class'=>'nav_wrap']
-    ]);
-    $menuItems = [
-        ['label' => Yii::t('app','Home'), 'url' => ['/site/index']],
-        ['label' => Yii::t('app','About us'), 'url' => ['/about'], 'active'=>$about_active],
-        ['label' => Yii::t('app','Articles'), 'url' => ['/article/list'], 'active'=>$article_active],
-        ['label' => Yii::t('app','Events'), 'url' => ['/event/list'],'active'=>$event_active],
-        ['label' => Yii::t('app','Experts'), 'url' => ['/expert/list'], 'active'=>$expert_active],
-        ['label' => Yii::t('app','Our partners'), 'url' => ['/partners'],'active'=>$partner_active],
-        ['label' => Yii::t('app','Contact'), 'url' => ['/site/contact']],
-    ];
-
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $menuItems,
-    ]);
-    NavBar::end();
-    ?>
-    <?php /*echo Breadcrumbs::widget([
-        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-    ])*/ ?>
-    <?= Alert::widget() ?>
-    <?= $content ?>
-</div>
-
-<footer class="footer">
-    <div class="large-container pb10">
-        <div class="pull-left mr10 mt5">
-            <?=Yii::t('app','Follow us on ')?>
-        </div>
-        <div class="text-left">
-            <a class="share-facebook share-icon" rel="nofollow" href="https://www.facebook.com/%D0%A6%D0%B5%D0%BD%D1%82%D1%80-%D0%BF%D0%BE%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%BE-%D0%BF%D1%80%D0%B0%D0%B2%D0%BE%D0%B2%D1%8B%D1%85-%D0%B8%D1%81%D1%81%D0%BB%D0%B5%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B9-232160823883163/" title="<?=Yii::t('app','Facebook');?>">
-                <span></span>
-            </a>
-            <a class="share-twitter share-icon" rel="nofollow" href="https://twitter.com/Centerkg2" title="<?=Yii::t('app','Twitter');?>">
-                <span></span>
-            </a>
-            <a class="share-linkedin share-icon" rel="nofollow" href="#" title="<?=Yii::t('app','LinkedIn');?>">
-                <span></span>
-            </a>
-            <a class="share-youtube share-icon" rel="nofollow" href="https://www.youtube.com/channel/UCriqO1LQc7Xry8aw5CzUlyw" title="<?=Yii::t('app','YouTube');?>">
-                <span></span>
-            </a>
-        </div>
-        <p class="text-center mb0 font12"><?=Yii::t('app','All rights reserved.')?> &copy; <?= date('Y') ?></p>
-
+        <p class="mb0 font12"><?=Yii::t('app','All rights reserved.')?> &copy; <?= date('Y') ?></p>
     </div>
 </footer>
 <a href="#" class="scrollToTop"><span class="fa fa-arrow-up"></span></a>

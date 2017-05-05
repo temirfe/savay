@@ -11,7 +11,7 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'language'=>'ru-RU',
-    'name'=>Yii::t('app','CPLR | Center for political and legal research'),
+    'name'=>Yii::t('app','Savay'),
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
         'request' => [

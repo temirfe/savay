@@ -14,6 +14,29 @@ use yii\web\ForbiddenHttpException;
  */
 class MyController extends Controller
 {
+
+    public function init()
+    {
+        parent::init();
+        // Set the application language if provided by GET, session or cookie
+        if (isset($_POST['language'])) {
+            Yii::$app->language = $_POST['language'];
+            Yii::$app->session->set('language', $_POST['language']);
+            $cookie = new \yii\web\Cookie([
+                'name' => 'language',
+                'value' => $_POST['language'],
+            ]);
+            $cookie->expire = time() + (60 * 60 * 24 * 365); // (1 year)
+            Yii::$app->response->cookies->add($cookie);
+        } else if (Yii::$app->session->has('language'))
+            Yii::$app->language = Yii::$app->session->get('language');
+        else if (isset(Yii::$app->request->cookies['language'])){
+            $lang=Yii::$app->request->cookies['language']->value;
+            Yii::$app->language = $lang;
+            Yii::$app->session->set('language', $lang);
+        }
+
+    }
     /**
      * @inheritdoc
      */
@@ -39,11 +62,22 @@ class MyController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                    'logout' => ['post'],
                 ],
             ],
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
+                    [
+                        'actions' => ['signup'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'actions' => ['logout'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
                     [
                         'actions' => ['create','update','delete'],
                         'allow' => true,

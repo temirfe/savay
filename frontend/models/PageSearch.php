@@ -19,7 +19,7 @@ class PageSearch extends Page
     {
         return [
             [['id', 'category'], 'integer'],
-            [['url', 'title', 'text', 'image'], 'safe'],
+            [['url', 'title', 'text', 'image', 'lang'], 'safe'],
         ];
     }
 
