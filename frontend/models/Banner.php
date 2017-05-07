@@ -3,15 +3,20 @@
 namespace frontend\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "banner".
  *
  * @property integer $id
- * @property integer $model_id
- * @property string $model_name
+ * @property string $title_ru
+ * @property string $title_en
+ * @property string $title_ky
+ * @property string $title_tr
+ * @property string $image
+ * @property string $url
  */
-class Banner extends \yii\db\ActiveRecord
+class Banner extends MyModel
 {
     /**
      * @inheritdoc
@@ -26,11 +31,12 @@ class Banner extends \yii\db\ActiveRecord
      */
     public function rules()
     {
-        return [
-            [['model_id', 'model_name'], 'required'],
-            [['model_id'], 'integer'],
-            [['model_name'], 'string', 'max' => 30],
+        $rules=[
+            [['title_ru','title_en','title_ky','title_tr'], 'string', 'max' => 250],
+            [['url'], 'string', 'max' => 100],
         ];
+
+        return ArrayHelper::merge(parent::rules(),$rules);
     }
 
     /**
@@ -38,10 +44,16 @@ class Banner extends \yii\db\ActiveRecord
      */
     public function attributeLabels()
     {
-        return [
+        $rules=[
             'id' => Yii::t('app', 'ID'),
-            'model_id' => Yii::t('app', 'Model ID'),
-            'model_name' => Yii::t('app', 'Model Name'),
+            'title_ru' => Yii::t('app', 'Text in Russian'),
+            'title_ky' => Yii::t('app', 'Text in Kyrgyz'),
+            'title_tr' => Yii::t('app', 'Text in Turkish'),
+            'title_en' => Yii::t('app', 'Text in English'),
+            'image' => Yii::t('app', 'Image'),
+            'url' => Yii::t('app', 'Url'),
         ];
+
+        return ArrayHelper::merge(parent::attributeLabels(),$rules);
     }
 }

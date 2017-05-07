@@ -84,9 +84,9 @@ class MyController extends Controller
                         'roles' => ['crud'],
                     ],
                     [
-                        'actions' => ['index'],
+                        'actions' => ['index','login','img-delete','about','contact'],
                         'allow' => true,
-                        'roles' => ['crud'],
+                        'roles' => ['?','@'],
                     ],
                     [
                         'actions' => ['list'],

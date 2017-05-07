@@ -10,9 +10,12 @@ class m161120_065441_create_page extends Migration
         $this->createTable('page', [
             'id' => $this->primaryKey(),
             'url' => $this->string('20')->notNull(),
-            'title' => $this->string('250')->notNull(),
+            'title' => $this->string('500')->notNull(),
             'text' => $this->text(),
             'image' =>$this->string('200')->notNull(),
+            'lang' =>$this->string('5')->notNull(),
+            'description' =>$this->string('1000')->notNull(),
+            'fact' =>$this->string('255')->notNull(),
             'category' => $this->integer('6')->notNull()->defaultValue(0),
         ],$tableOptions);
 

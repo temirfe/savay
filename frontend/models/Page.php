@@ -14,6 +14,8 @@ use yii\helpers\ArrayHelper;
  * @property string $text
  * @property string $image
  * @property string $lang
+ * @property string $description
+ * @property string $fact
  * @property integer $category
  */
 class Page extends MyModel
@@ -33,10 +35,12 @@ class Page extends MyModel
     {
         $rules= [
             [['title'], 'required'],
-            [['text','lang'], 'string'],
+            [['text','lang','description'], 'string'],
             [['category'], 'integer'],
-            [['url', 'title'], 'string', 'max' => 20],
+            [['url', 'title'], 'string', 'max' => 500],
+            [['description'], 'string', 'max' => 1000],
             [['image'], 'string', 'max' => 200],
+            [['fact'], 'string', 'max' => 255],
         ];
 
         return ArrayHelper::merge(parent::rules(),$rules);
@@ -47,7 +51,7 @@ class Page extends MyModel
      */
     public function attributeLabels()
     {
-        return [
+        $rules=[
             'id' => Yii::t('app', 'ID'),
             'url' => Yii::t('app', 'Url'),
             'title' => Yii::t('app', 'Title'),
@@ -55,6 +59,26 @@ class Page extends MyModel
             'image' => Yii::t('app', 'Image'),
             'lang' => Yii::t('app', 'Language'),
             'category' => Yii::t('app', 'Category'),
+            'description' => Yii::t('app', 'Description'),
+            'fact' => Yii::t('app', 'Fact'),
         ];
+
+        return ArrayHelper::merge(parent::attributeLabels(),$rules);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+
+            $dao=Yii::$app->db;
+            $dao->createCommand()->update('depend', ['last_update' =>time()], 'table_name="page"')->execute();
+
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -4,9 +4,10 @@
 
 use yii\helpers\Html;
 
-$this->title = Yii::t('app','About us').' | '.Yii::t('app','CPLR');
+$this->title = Yii::t('app','About us').' | Savay Travel';
 $this->params['breadcrumbs'][] = $this->title;
-$row=Yii::$app->db->createCommand("SELECT * FROM page WHERE url='about'")->queryOne();
+$lang=substr(Yii::$app->language,0,2);
+$row=Yii::$app->db->createCommand("SELECT * FROM page WHERE url='about' AND lang='{$lang}'")->queryOne();
 ?>
 <div class="site-about container">
     <div class="row">

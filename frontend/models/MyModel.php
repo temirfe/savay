@@ -88,10 +88,11 @@ class MyModel extends \yii\db\ActiveRecord
 
                 $imagine=Image::getImagine()->open($tosave.'/'.$imageName);
                 $imagine->thumbnail(new Box(1500, 1000))->save($tosave.'/'.$imageName);
-                //$imagine->thumbnail(new Box(400, 250))->save($tosave.'/s_'.$imageName);
-                $width=375;
-                if($model_name=='expert') $width=200;
-                Image::thumbnail($tosave.'/'.$imageName,$width, 200)->save($tosave.'/s_'.$imageName);
+                $imagine->thumbnail(new Box(500, 800))->save($tosave.'/s_'.$imageName);
+
+                if($model_name=='banner'){
+                    Image::thumbnail($tosave.'/'.$imageName,1500, 450)->save($tosave.'/'.$imageName);
+                }
 
                 Yii::$app->db->createCommand("UPDATE {$model_name} SET image='{$imageName}' WHERE id='{$this->id}'")->execute();
             }

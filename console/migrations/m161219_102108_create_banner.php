@@ -9,10 +9,13 @@ class m161219_102108_create_banner extends Migration
         $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         $this->createTable('banner', [
             'id' => $this->primaryKey(),
-            'model_id' => $this->integer()->notNull(),
-            'model_name' => $this->string(30)->notNull(),
+            'image' => $this->string(100)->notNull(),
+            'title_ru' => $this->string(250)->notNull(),
+            'title_en' => $this->string(250)->notNull(),
+            'title_ky' => $this->string(250)->notNull(),
+            'title_tr' => $this->string(250)->notNull(),
+            'url' => $this->string(100)->notNull(),
         ],$tableOptions);
-        $this->createIndex('idx_banner_model', 'banner', 'model_id');
     }
 
     public function down()

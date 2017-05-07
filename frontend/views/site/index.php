@@ -2,9 +2,8 @@
 
 /* @var $this yii\web\View */
 use yii\helpers\Html;
-use frontend\models\Article;
-use frontend\models\Event;
-use frontend\models\Video;
+use frontend\models\Page;
+use frontend\models\Banner;
 use yii\caching\DbDependency;
 use yii\bootstrap\Carousel;
 
@@ -12,51 +11,35 @@ $this->title = "Savay Travel";
 $dao=Yii::$app->db;
 $banner=$dao->createCommand("SELECT * FROM banner ORDER BY id DESC LIMIT 1")->queryOne();
 $msg='';$subtitle='';$banner_article_id=0;
-if(isset($banner['model_name'])){
-    if($banner['model_name']=='article'){
-        $bmodel=Article::findOne($banner['model_id']);
-        $msg=$bmodel->getLangTitle();
-        $subtitle="<div class='white mt10 font12 subtitle'><div class='afterdot pull-left'>".$bmodel->getAuthors()."</div>
-        <time class='date'>".Yii::$app->formatter->asDate($bmodel->date_create)."</time></div>";
-        $banner_article_id=$bmodel->id;
-    }
-    else if($banner['model_name']=='event'){
-        $bmodel=Event::findOne($banner['model_id']);
-        $status=$bmodel->getStatus();
-        $msg=$status['msg'];
-
-        $date=$bmodel->getDates();
-        $subtitle="<div class='white font13 mt10 roboto'>".$date['start']."</div>";
-    }
-}
+$lang=substr(Yii::$app->language,0,2);
 $dep = new DbDependency();
-$dep->sql = 'SELECT MAX(last_update) FROM depend WHERE table_name="article"';
+$dep->sql = 'SELECT MAX(last_update) FROM depend WHERE table_name="page"';
+$pages = $dao->cache(function ($dao) {
+    return Page::find()->where("url='index'")->orderBy('id DESC')->all();
+}, 10000, $dep);
 
-$owns = $dao->cache(function ($dao) use($banner_article_id) {
-    return Article::find()->where("own=1 AND id<>{$banner_article_id}")->orderBy('id DESC')->all();
-}, 3600, $dep);
-$articles = $dao->cache(function ($dao) {
-    return Article::find()->select('id,title')->where("own=0")->orderBy('id DESC')->limit(10)->all();
-}, 3600, $dep);
+$dep_ban = new DbDependency();
+$dep_ban->sql = 'SELECT MAX(last_update) FROM depend WHERE table_name="banner"';
+$banners = $dao->cache(function ($dao) {
+    return Banner::find()->orderBy('id DESC')->all();
+}, 10000, $dep_ban);
 
+$carousel = [];
 
-$carousel = [
-    [
-        'content' => '<img src="/images/img1.jpg"/>',
-        'caption' => '<h1>Заголовок</h1><p>Какой-то дополнительный текст</p><p><a href="/article/link/1" class="btn btn-primary">Подробнее <span class="fa fa-chevron-right"></a></p>',
-        'options' => []
-    ],
-    [
-        'content' => '<img src="/images/img2.jpg"/>',
-        'caption' => '',
-        'options' => []
-    ],
-    [
-        'content' => '<img src="/images/img3.jpg"/>',
-        'caption' => '',
-        'options' => ['class' => 'my-class']
-    ]
-];
+foreach($banners as $k=>$ban){
+    switch($lang){
+        case "ru": $title=$ban->title_ru; break;
+        case "en": $title=$ban->title_en; break;
+        case "ky": $title=$ban->title_ky; break;
+        case "tr": $title=$ban->title_tr; break;
+        default: $title=$ban->title_ru;
+    }
+    if($ban->url){
+        $title.="<br /><p>".Html::a(Yii::t("app","Read more")." <span class='fa fa-chevron-right'></span>",$ban->url,['class'=>'btn btn-primary'])."</p>";
+    }
+    $carousel [$k]['content']=Html::img('/images/banner/'.$ban->id.'/'.$ban->image);
+    $carousel [$k]['caption']="<h1>".$title."</h1>";
+}
 
 echo Carousel::widget([
     'items' => $carousel,
@@ -67,58 +50,53 @@ echo Carousel::widget([
     ]
 ]);
 ?>
+<br />
+<br />
 
-<div class="site-index container oh pb20">
+<div class="site-index container pb20">
 
     <div class="body-content">
-        lang: <?php echo Yii::$app->language?>
-        <div class="col-md-4 oh">
             <?php
-            if(!empty($articles)){
-                echo "<h3 class='roboto mb15 navy font19 bbthinblue pb5'>".Yii::t('app','Interesting materials')."</h3>";
-                foreach($articles as $art){
-                    echo Html::a("<span class='mr4 block pull-left'>—</span><span class='oh block'>".$art->title."</span>",['/article/view','id'=>$art->id],['class'=>'mb5 iblock color3 roboto no_underline w100']);
-                }
-            }
-            ?>
-        </div>
-        <div class="col-md-4 oh">
-            <?php
-            if($owns){
-                echo "<h3 class='roboto mb15 navy font19 bbthinblue pb5'>".Yii::t('app','Center Articles')."</h3>";
-                foreach ($owns as $article){
-                    ?>
-                    <div class="oh mb20">
-                        <div class='own_thumb pull-left mr10'>
+            if(!empty($pages)){
+                foreach($pages as $art){
+                    if($art->lang==$lang){
+                        ?>
+                        <div class="col-md-7 oh p_wrap">
+                            <h4 class='roboto mb15 savindigo text-uppercase pb5'><?=$art->title?></h4>
+                            <h3><?=Html::a($art->description,['/page/view','id'=>$art->id],['class'=>'mb5 iblock color3 roboto no_underline w100']);?></h3>
+                            <?=$art->text?>
                             <?php
-                            if($article->image){
-                                $img=Html::img("/images/article/".$article->id."/s_".$article->image,['class'=>'img-responsive']);
-                                echo Html::a($img,['/article/view','id'=>$article->id],['class'=>'img-responsive rel js_des_list_img']);
-
-                            }
+                                if($art->fact){
+                                    $parts=explode('-',$art->fact);
+                                    $number=trim($parts[0]);
+                                    $words=explode(" ",trim($parts[1]));
+                                    ?>
+                                    <div class="experience-box">
+                                        <div class="experience-border"></div>
+                                        <div class="experience-content">
+                                            <div class="experience-number"><?=$number?></div>
+                                            <div class="experience-info">
+                                                <?php
+                                                foreach ($words as $word) {
+                                                        echo $word."<br />";
+                                                    }
+                                                ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php
+                                }
                             ?>
                         </div>
-
-                        <div class="oh">
-                            <?=Html::a($article->title,['/article/view','id'=>$article->id],['class'=>'black own_title roboto font16']); ?>
-                            <div class="color9 mt5 roboto font13">
-                                <?php if($authors=$article->getAuthors()){
-                                    ?>
-                                    <div class='afterdot pull-left'><?=$authors?></div>
-                                    <?php
-                                } ?>
-                                <time class="date"><?=Yii::$app->formatter->asDate($article->date_create)?></time>
-                            </div>
+                        <div class="col-md-5 rel">
+                            <?=Html::a(Html::img("/images/page/".$art->id."/s_".$art->image,['class'=>'img-responsive']),['/page/view','id'=>$art->id],['class'=>'rel z100']);?>
+                            <div class="dots abs"></div>
                         </div>
-                    </div>
-                    <?php
+                        <?php
+                    }
                 }
             }
             ?>
-        </div>
-        <div class="col-md-4 oh">
-        </div>
-
         <div class="clear"></div>
 
 

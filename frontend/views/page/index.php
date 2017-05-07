@@ -26,6 +26,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'url',
             'title',
+            'description',
+            'fact',
             /*[
                 'attribute'=>'text',
                 'format'=>'raw',

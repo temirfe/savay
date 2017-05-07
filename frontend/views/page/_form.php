@@ -14,7 +14,7 @@ use iutbay\yii2kcfinder\KCFinder;
 
 <div class="page-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data']]); ?>
     <?= $form->errorSummary($model); ?>
 
     <?php echo $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
@@ -23,6 +23,8 @@ use iutbay\yii2kcfinder\KCFinder;
         <div class="col-md-4"><?= $form->field($model, 'lang')->dropDownList(['ru'=>'Русский','ky'=>'Кыргызча', 'en'=>'English', 'tr'=>'Türkçe']) ?></div>
     </div>
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+
+    <?php echo $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'text')->widget(CKEditor::className(), [
         'options' => ['rows' => 6],
@@ -45,8 +47,36 @@ use iutbay\yii2kcfinder\KCFinder;
             ]
         ]
     ]) ?>
+    
+    <?php
+    $key = $model->id;
+    $url = Url::to(['site/img-delete', 'id' => $key, 'model_name'=>'page']);
 
-    <?php //echo $form->field($model, 'image')->textInput(['maxlength' => true]); ?>
+    $initialPreviewConfig =[];
+    if(!$model->isNewRecord && $main_img=$model->image) {
+        $iniImg=[Html::img("@web/images/page/".$model->id."/s_".$main_img, ['class'=>'file-preview-image', 'alt'=>''])];
+        $url=Url::to(['site/img-delete', 'id' => $model->id, 'model_name'=>'page']);
+        $initialPreviewConfig[] = ['width' => '80px', 'url' => $url, 'key' => "s_".$main_img];
+    }
+    else {
+        $iniImg=false;
+    }
+    echo $form->field($model, 'imageFile')->widget(FileInput::classname(), [
+        'options' => ['accept' => 'image/*'],
+        'pluginOptions' => [
+            'showCaption' => false,
+            'showRemove' => false,
+            'showUpload' => false,
+            'initialPreview'=>$iniImg,
+            'previewFileType' => 'any',
+            'uploadUrl' => Url::to(['/site/img-upload','id'=>$model->id]),
+            'initialPreviewConfig' => $initialPreviewConfig,
+        ],
+    ]);
+
+    ?>
+
+    <?php echo $form->field($model, 'fact')->textInput(['maxlength' => true]) ?>
 
     <?php //echo $form->field($model, 'category')->dropDownList(["0"=>"General","1"=>"Explore UAE with us", "2"=>"Destinations of your interest"],[]); ?>
 

@@ -11,15 +11,42 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="page-view container">
-    <!--<div class="col-md-4"></div>
+    <div class="col-md-1"></div>
     <div class="col-md-8">
+        <h1><?= Html::encode($this->title) ?></h1>
 
-    </div>-->
+        <h3 class="mt0 mb20"><?=$model->description ?></h3>
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <br />
-    <div class="col-md-10">
         <?=$model->text ?>
+        <?php
+        if($model->image){
+            ?>
+            <div class="mt20 mb40">
+                <?=Html::img('/images/page/'.$model->id.'/'.$model->image,['class'=>'img-responsive'])?>
+            </div>
+            <?php
+        }?>
+        <?php
+        if($model->fact){
+            $parts=explode('-',$model->fact);
+            $number=trim($parts[0]);
+            $words=explode(" ",trim($parts[1]));
+            ?>
+            <div class="experience-box">
+                <div class="experience-number"><?=$number?></div>
+                <div class="experience-info">
+                    <?php
+                    foreach ($words as $word) {
+                        echo $word."<br />";
+                    }
+                    ?>
+                </div>
+            </div>
+            <?php
+        }
+        ?>
     </div>
+
+
 
 </div>

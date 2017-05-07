@@ -79,7 +79,6 @@ if($controller=='site' && $action=="partners") $partner_active=true; else $partn
     $menuItems = [
         ['label' => Yii::t('app','Home'), 'url' => ['/site/index']],
         ['label' => Yii::t('app','About us'), 'url' => ['/about'], 'active'=>$about_active],
-        ['label' => Yii::t('app','Our partners'), 'url' => ['/partners'],'active'=>$partner_active],
         ['label' => Yii::t('app','Contact'), 'url' => ['/site/contact']],
     ];
     $langPrefs = [

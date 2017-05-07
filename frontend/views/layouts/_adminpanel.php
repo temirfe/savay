@@ -22,12 +22,7 @@ $video_active='';
 $controller=Yii::$app->controller->id;
 if($controller=='page') $pages_active="active";
 else if($controller=='user') $users_active="active";
-else if($controller=='article') $article_active="active";
-else if($controller=='event') $event_active="active";
-else if($controller=='expert') $expert_active="active";
 else if($controller=='banner') $banner_active="active";
-else if($controller=='category') $category_active="active";
-else if($controller=='attendant') $attendant_active="active";
 else if($controller=='video') $video_active="active";
 ?>
 <div class="admpanel_top">
@@ -38,14 +33,8 @@ else if($controller=='video') $video_active="active";
       	<div class="top_admpanel_wrapper">
             <div class="operations">
                 <div class="<?=$pages_active?>"><span class='panel-icon fa fa-file'></span><?=Html::a(Yii::t('app','Pages'), ['/page/index']); ?></div>
-                <div class="<?=$article_active?>"><span class='panel-icon fa fa-font'></span><?=Html::a(Yii::t('app','Articles'), ['/article/index']); ?></div>
-                <div class="<?=$event_active?>"><span class='panel-icon fa fa-calendar'></span><?=Html::a(Yii::t('app','Events'), ['/event/index']); ?></div>
-                <div class="<?=$expert_active?>"><span class='panel-icon fa fa-briefcase'></span><?=Html::a(Yii::t('app','Experts'), ['/expert/index']); ?></div>
-                <div class="<?=$category_active?>"><span class='panel-icon fa fa-tasks'></span><?=Html::a(Yii::t('app','Categories'), ['/category/index']); ?></div>
                 <div class="<?=$banner_active?>"><span class='panel-icon fa fa-bookmark'></span><?=Html::a(Yii::t('app','Home banner'), ['/banner/index']); ?></div>
-                <div class="<?=$attendant_active?>"><span class='panel-icon fa fa-users'></span><?=Html::a(Yii::t('app','Attendants'), ['/attendant/index']); ?></div>
                 <div class="<?=$users_active?>"><span class='panel-icon fa fa-user'></span><?=Html::a(Yii::t('app','Users'), ['/user/index']); ?></div>
-                <div class="<?=$users_active?>"><span class='panel-icon fa fa-video-camera'></span><?=Html::a(Yii::t('app','Videos'), ['/video/index']); ?></div>
              </div>
              <div class="clear"></div>
                 <?php

@@ -23,8 +23,8 @@ class BannerSearch extends Banner
     public function rules()
     {
         return [
-            [['id', 'model_id'], 'integer'],
-            [['model_name'], 'safe'],
+            [['id'], 'integer'],
+            [['title_ru','title_en','title_ky','title_tr'], 'safe'],
         ];
     }
 
@@ -65,10 +65,11 @@ class BannerSearch extends Banner
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'model_id' => $this->model_id,
+            'title_ru'=> $this->title_ru,
+            'title_en'=> $this->title_en,
+            'title_ky'=> $this->title_ky,
+            'title_tr'=> $this->title_tr,
         ]);
-
-        $query->andFilterWhere(['like', 'model_name', $this->model_name]);
 
         return $dataProvider;
     }

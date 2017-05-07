@@ -25,11 +25,12 @@ $names=[Yii::t('app','Articles'),Yii::t('app','Events')]
         'columns' => [
             ['attribute' => 'id', 'contentOptions'=>['width'=>80]],
             [
-                'attribute' => 'model_name',
+                'attribute' => 'image',
                 'format' => 'raw',
-                'filter' => Html::activeDropDownList($searchModel, 'model_name', $names,['class'=>'form-control']),
+                'filter' => Html::img("@web/images/banner/".$model->id."/s_".$main_img),
             ],
-            'model_id',
+            'title_ru',
+            'title_ky',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

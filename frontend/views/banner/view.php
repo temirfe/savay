@@ -18,9 +18,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'model_id',
-            'model_name',
+            'image',
+            'url',
+            'title_ru',
         ],
     ]) ?>
+    <?=Html::img("@web/images/banner/".$model->id."/".$model->image, ['class'=>'img-responsive', 'alt'=>''])?>
 
 </div>
